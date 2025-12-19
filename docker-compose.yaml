@@ -1,0 +1,61 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - "${WEB_PORT_EXTERNAL}:${WEB_PORT_INTERNAL}"
+    volumes:
+      - .:/app/
+    links:
+      - php
+    networks:
+      - pg-network
+
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    ports:
+      - "${DB_PORT_EXTERNAL}:${DB_PORT_INTERNAL}"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - pg-oasis-data:/var/lib/postgresql
+    networks:
+      - pg-network
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT_INTERNAL}   # PHP łączy się po wewnętrznym porcie!
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      APP_ENV: ${APP_ENV}
+    networks:
+      - pg-network
+
+  pgadmin-Oasis:
+    image: dpage/pgadmin4:latest
+    container_name: pg-admin-oasis
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT_EXTERNAL}:${PGADMIN_PORT_INTERNAL}"
+    networks:
+      - pg-network
+
+networks:
+  pg-network:
+
+volumes:
+  pg-oasis-data:
