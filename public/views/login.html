@@ -16,7 +16,7 @@
         <div class="separator separator--blue"></div>
         
         <div class="form-wrapper">
-            <form action="/login" method="POST" class="login-form-container" novalidate>
+            <form action="/login" method="POST" class="login-form-container">
                 <div class="form-header">
                     <h1 class="form-title">
                         Witaj w Oasis
@@ -59,7 +59,7 @@
                                 type="button" 
                                 class="password-toggle" 
                                 aria-label="Pokaż hasło"
-                                onclick="togglePassword()">
+                                onclick="togglePassword('password')">
                                 <svg class="eye-icon eye-icon--closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
@@ -85,12 +85,12 @@
                 </button>
 
                 <div class="form-footer">
-                    <a href="/register" class="register-link">Nie masz konta? Zarejestruj się</a>
+                    <a href="/register" class="register-link">Zarejestruj się</a>
                 </div>
             </form>
         </div>
     </main>
 
-    <script src="/public/scripts/togglePasswordLogin.js"></script>
+    <script src="/public/scripts/togglePassword.js"></script>
 </body>
 </html>
