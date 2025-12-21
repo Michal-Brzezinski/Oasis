@@ -1,0 +1,541 @@
+/* ====================================
+   CSS Variables for maintainability
+   ==================================== */
+:root {
+  /* Colors */
+  --color-primary-dark: rgb(18, 18, 138);
+  --color-primary: rgb(21, 61, 196);
+  --color-secondary: rgb(60, 179, 113);
+  --color-secondary-light: rgb(144, 238, 144);
+  --color-accent: rgb(41, 125, 97);
+  --color-background: rgb(12, 51, 133);
+  --color-hover: rgb(102, 102, 216);
+  --color-button-bg: rgb(43, 43, 149);
+  --color-white: #ffffff;
+  --color-error: #ff4444;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Typography */
+  --font-size-base: 1rem;
+  --font-size-lg: 1.2rem;
+  --font-size-xl: 2.5rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+
+  /* Shadows */
+  --shadow-input: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-input-focus: inset 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0 4px 12px rgba(60, 179, 113, 0.5);
+  --shadow-form: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+/* ====================================
+   Font Face
+   ==================================== */
+@font-face {
+  font-family: 'Rubik';
+  src: url('/public/fonts/Rubik.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ====================================
+   Reset & Base Styles
+   ==================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ====================================
+   Layout - Mobile First
+   ==================================== */
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.image {
+  display: none;
+  background-image: url('/public/img/login_img.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+.separator {
+  display: none;
+  flex-shrink: 0;
+}
+
+.separator--white {
+  background-color: var(--color-white);
+}
+
+.separator--blue {
+  background-color: var(--color-primary);
+}
+
+.form-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--color-primary-dark);
+}
+
+.login-form-container {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-form);
+  width: 100%;
+  max-width: 500px;
+  padding: var(--spacing-xl) var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+/* ====================================
+   Form Header
+   ==================================== */
+.form-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-title {
+  color: var(--color-white);
+  font-size: clamp(1.75rem, 5vw, var(--font-size-xl));
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.title-logo {
+  height: 1.5em;
+  width: auto;
+  vertical-align: middle;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.form-subtitle {
+  color: var(--color-secondary);
+  font-size: clamp(1rem, 3vw, var(--font-size-lg));
+  font-weight: var(--font-weight-normal);
+  line-height: 1.4;
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+/* ====================================
+   Form Fields
+   ==================================== */
+.form-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.form-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.field--half {
+  width: 100%;
+}
+
+.field-hint {
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  margin-top: -0.25rem;
+  opacity: 0.9;
+}
+
+label {
+  font-size: var(--font-size-base);
+  color: var(--color-white);
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+}
+
+input {
+  width: 100%;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  box-shadow: var(--shadow-input);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  background-color: var(--color-background);
+  color: var(--color-white);
+  transition: border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  min-height: 2.75rem;
+}
+
+input:focus {
+  border-color: var(--color-secondary-light);
+  box-shadow: var(--shadow-input-focus);
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--color-accent);
+  opacity: 0.8;
+}
+
+input:invalid:not(:placeholder-shown) {
+  border-color: var(--color-error);
+}
+
+/* ====================================
+   Password Visibility Toggle
+   ==================================== */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+
+.password-toggle:hover {
+  color: var(--color-secondary-light);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid var(--color-secondary-light);
+  outline-offset: 2px;
+  color: var(--color-secondary-light);
+}
+
+.eye-icon {
+  pointer-events: none;
+}
+
+.eye-icon--open {
+  display: none;
+}
+
+.eye-icon--closed {
+  display: block;
+}
+
+/* ====================================
+   Buttons
+   ==================================== */
+.btn {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: none;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-secondary-light);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: linear-gradient(45deg, var(--color-secondary), var(--color-secondary-light));
+  color: var(--color-white);
+}
+
+.btn--primary:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-button);
+}
+
+.btn--primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn--google {
+  background-color: var(--color-button-bg);
+  color: var(--color-white);
+}
+
+.btn--google:hover:not(:disabled) {
+  background-color: var(--color-hover);
+  transform: scale(1.02);
+}
+
+.btn--google:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn--google img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ====================================
+   Separator Line
+   ==================================== */
+.separator-line {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: var(--spacing-xs) 0;
+  color: var(--color-secondary);
+  font-size: var(--font-size-base);
+}
+
+.separator-line::before,
+.separator-line::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.separator-line::before {
+  margin-right: 0.75em;
+}
+
+.separator-line::after {
+  margin-left: 0.75em;
+}
+
+/* ====================================
+   Message & Links
+   ==================================== */
+.message {
+  color: var(--color-error);
+  background-color: rgba(255, 68, 68, 0.1);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.form-footer {
+  width: 100%;
+  text-align: center;
+  margin-top: var(--spacing-sm);
+}
+
+.register-link {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  transition: color var(--transition-fast);
+  display: inline-block;
+  padding: var(--spacing-sm);
+}
+
+.register-link:hover {
+  color: var(--color-secondary-light);
+  text-decoration: underline;
+}
+
+.register-link:focus-visible {
+  outline: 2px solid var(--color-secondary-light);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ====================================
+   Responsive Design - Small Mobile
+   ==================================== */
+@media screen and (max-width: 480px) {
+  .form-title {
+    font-size: 1.5rem;
+    gap: 0.4rem;
+  }
+
+  .title-logo {
+    height: 1.8em;
+  }
+}
+
+/* ====================================
+   Responsive Design - Tablet
+   ==================================== */
+@media screen and (min-width: 768px) {
+  .form-wrapper {
+    padding: var(--spacing-xl);
+  }
+
+  .login-form-container {
+    padding: var(--spacing-xl) var(--spacing-xl);
+  }
+
+  .form-fields {
+    gap: var(--spacing-xl);
+  }
+
+  .form-row {
+    flex-direction: row;
+    gap: var(--spacing-md);
+  }
+
+  .field--half {
+    width: calc(50% - var(--spacing-md) / 2);
+  }
+}
+
+/* ====================================
+   Responsive Design - Desktop
+   ==================================== */
+@media screen and (min-width: 1024px) {
+  .image {
+    display: block;
+    width: 46%;
+  }
+
+  .separator {
+    display: block;
+  }
+
+  .separator--white {
+    width: 1%;
+  }
+
+  .separator--blue {
+    width: 3%;
+  }
+
+  .form-wrapper {
+    width: 50%;
+    padding: var(--spacing-md);
+  }
+
+  .login-form-container {
+    max-width: 600px;
+    padding: var(--spacing-xl);
+  }
+}
+
+/* ====================================
+   Responsive Design - Large Desktop
+   ==================================== */
+@media screen and (min-width: 1440px) {
+  .login-form-container {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* ====================================
+   Print Styles
+   ==================================== */
+@media print {
+
+  .image,
+  .separator {
+    display: none;
+  }
+
+  .form-wrapper {
+    width: 100%;
+  }
+}
+
+/* ====================================
+   Accessibility - Reduced Motion
+   ==================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ====================================
+   Focus Visible Polyfill
+   ==================================== */
+:focus:not(:focus-visible) {
+  outline: none;
+}
