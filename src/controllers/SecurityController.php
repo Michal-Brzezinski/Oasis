@@ -196,4 +196,43 @@ class SecurityController extends AppController
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    public function logout()
+    {
+        // Zezwalamy tylko na metodę GET
+        if (!$this->allowMethods(['GET'])) {
+            http_response_code(405);
+            return $this->render('405', ['message' => 'Method not allowed']);
+        }
+
+        // Start sesji jeśli jeszcze nie została rozpoczęta
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Usunięcie wszystkich danych sesji
+        $_SESSION = [];
+
+        // Zniszczenie ciasteczka sesji (jeśli istnieje)
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        // Zniszczenie sesji
+        session_destroy();
+
+        // Przekierowanie na stronę logowania
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/login");
+        exit();
+    }
 }

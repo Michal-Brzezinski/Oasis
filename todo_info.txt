@@ -9,3 +9,9 @@
 - nawet jeżeli inny routing podpowiedziany przez AI to nic się nie stanie, nie musi być wszstko 100% jak na zajęciach,
   chodzi o to żeby umieć samemu robic 
 - ponoć będzie pytanie "jak to z tą obiektowością"
+
+_______________________________________________________________
+- CD DOKUMENTACJI!!!
+- DODAĆ LEPSZE ZABEZPIECZENIA Z SESJAMI ABY PO WYLOGOWANIU NIE MOŻNA BYŁO DOSTAĆ SIĘ DO LINKÓW
+- RESPONSYWNOŚĆ POZWALAJĄCA NA PRZEMIESZCZANIE POMIĘDZY KOLEJNYMI ZAKŁADKAMI Z HAMBURGERA
+_______________________________________________________________

@@ -1,0 +1,1454 @@
+/**
+ * Style dla dashboardu Oasis
+ * Bazowane na designie z załączników
+ */
+
+/* ==================== ZMIENNE ==================== */
+:root {
+    /* Kolory główne */
+    --color-primary: #1e88e5;
+    --color-secondary: #43a047;
+    --color-accent: #00acc1;
+    --color-danger: #e53935;
+    --color-warning: #fb8c00;
+
+    /* Kolory tła */
+    --bg-blue: #1976d2;
+    --bg-teal: #00897b;
+    --bg-navy: #0d47a1;
+    --bg-dark: #1a1a2e;
+    --bg-light: #f5f7fa;
+    --bg-card: #ffffff;
+
+    /* Kolory czujników (z załączników) */
+    --sensor-temp-bg: #1e3a5f;
+    --sensor-temp-accent: #1e88e5;
+    --sensor-humidity-bg: #2d5f3f;
+    --sensor-humidity-accent: #43a047;
+    --sensor-pressure-bg: #1a2847;
+    --sensor-pressure-accent: #1565c0;
+
+    /* Cienie */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    /* Zaokrąglenia */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* Odstępy */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+}
+
+/* ==================== RESETOWANIE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #333;
+    background: var(--bg-light);
+    line-height: 1.6;
+}
+
+/* ==================== LAYOUT ==================== */
+.dashboard-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Navigation */
+.top-nav {
+    background: var(--bg-navy);
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: white;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.nav-center {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: white;
+    border-radius: 2px 2px 0 0;
+}
+
+.btn-logout {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main Container */
+.main-container {
+    flex: 1;
+    padding: var(--spacing-lg);
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.page-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== ALERTS ==================== */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    animation: slideDown 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.alert-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+/* ==================== PAGE HEADER ==================== */
+.page-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-xs);
+}
+
+.page-header .subtitle {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* ==================== PANEL - KARTY CZUJNIKÓW ==================== */
+.panel-container {
+    width: 100%;
+}
+
+.sensors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.sensor-card {
+    background: var(--sensor-temp-bg);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sensor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.sensor-card.temperature-card {
+    background: var(--sensor-temp-bg);
+}
+
+.sensor-card.humidity-card {
+    background: var(--sensor-humidity-bg);
+}
+
+.sensor-card.pressure-card {
+    background: var(--sensor-pressure-bg);
+}
+
+.sensor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.sensor-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sensor-icon {
+    font-size: 1.5rem;
+}
+
+.sensor-value {
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: var(--spacing-md) 0;
+}
+
+.sensor-value .unit {
+    font-size: 2rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.sensor-chart {
+    height: 100px;
+    margin: var(--spacing-md) 0;
+}
+
+.sensor-chart canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.btn-details {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-details:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ==================== PODLEWANIE ==================== */
+.watering-container {
+    width: 100%;
+}
+
+.watering-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.section-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.section-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: #1a1a2e;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: #555;
+    font-weight: 500;
+}
+
+.form-select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+.btn-start,
+.btn-stop {
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.btn-start {
+    background: var(--color-secondary);
+    color: white;
+}
+
+.btn-start:hover:not(:disabled) {
+    background: #388e3c;
+}
+
+.btn-stop {
+    background: var(--color-danger);
+    color: white;
+}
+
+.btn-stop:hover:not(:disabled) {
+    background: #c62828;
+}
+
+.btn-start:disabled,
+.btn-stop:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.status-display {
+    background: #f5f5f5;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.status-label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: var(--spacing-xs);
+}
+
+.status-value {
+    font-size: 1rem;
+    color: #333;
+}
+
+.zone-name {
+    font-weight: 600;
+}
+
+.zone-name.active {
+    color: var(--color-secondary);
+}
+
+/* Sekcja harmonogramów */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    color: #1a1a2e;
+}
+
+.btn-add {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-add:hover {
+    background: #1565c0;
+}
+
+.schedules-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.schedule-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.schedule-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.schedule-header h3 {
+    font-size: 1.1rem;
+    color: #1a1a2e;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--color-secondary);
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+}
+
+.schedule-details {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.schedule-info {
+    margin: 0;
+}
+
+.schedule-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: background 0.3s ease;
+}
+
+.btn-icon:hover {
+    background: #f0f0f0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: #999;
+}
+
+.text-muted {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .watering-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sensors-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .nav-center {
+        gap: var(--spacing-xs);
+    }
+
+    .nav-link {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.9rem;
+    }
+
+    .main-container {
+        padding: var(--spacing-sm);
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .sensors-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== KAMERY ==================== */
+.cameras-container {
+    width: 100%;
+}
+
+.main-camera-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.camera-viewer {
+    background: var(--bg-navy);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.camera-label {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-dot.green {
+    background: #4caf50;
+    box-shadow: 0 0 8px #4caf50;
+}
+
+.status-dot.yellow {
+    background: #ffc107;
+    box-shadow: 0 0 8px #ffc107;
+}
+
+.status-dot.red {
+    background: #f44336;
+    box-shadow: 0 0 8px #f44336;
+}
+
+.camera-stream {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stream-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.stream-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.camera-stream:hover .stream-overlay {
+    opacity: 1;
+}
+
+.play-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+.play-btn:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.camera-controls {
+    background: rgba(0, 0, 0, 0.5);
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.control-btn.recording {
+    background: var(--color-danger);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Lista kamer */
+.cameras-section {
+    margin-top: var(--spacing-xl);
+}
+
+.cameras-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: #1a1a2e;
+}
+
+.cameras-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.camera-thumbnail {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.camera-thumbnail:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.camera-thumbnail.active {
+    border: 3px solid var(--color-primary);
+}
+
+.camera-thumbnail .status-dot {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 1;
+}
+
+.thumbnail-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+.camera-info {
+    padding: var(--spacing-sm);
+}
+
+.camera-name {
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-xs);
+}
+
+.camera-location {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Zarządzanie kamerami */
+.cameras-manage-container {
+    width: 100%;
+}
+
+.cameras-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.camera-manage-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    gap: var(--spacing-md);
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+.camera-manage-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.camera-preview {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.camera-preview img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.camera-details h3 {
+    font-size: 1.1rem;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-xs);
+}
+
+.camera-details .location {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.camera-details .status {
+    font-size: 0.9rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.online {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.offline {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.camera-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+/* ==================== USTAWIENIA ==================== */
+.settings-container {
+    width: 100%;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.settings-section {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.settings-section.full-width {
+    grid-column: 1 / -1;
+}
+
+.settings-section .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.settings-section .section-header .icon {
+    font-size: 1.5rem;
+}
+
+.settings-section .section-header h2 {
+    font-size: 1.3rem;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.btn-save {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-save:hover {
+    background: #1565c0;
+}
+
+/* Toggle Group */
+.toggle-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.toggle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: #f9f9f9;
+    border-radius: var(--radius-md);
+}
+
+.toggle-label {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Czujniki w ustawieniach */
+.sensors-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.sensor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: #f9f9f9;
+    border-radius: var(--radius-md);
+    transition: background 0.3s ease;
+}
+
+.sensor-item:hover {
+    background: #f0f0f0;
+}
+
+.sensor-info {
+    flex: 1;
+}
+
+.sensor-name {
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-xs);
+}
+
+.sensor-status {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.btn-calibrate,
+.btn-add-sensor {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-calibrate:hover,
+.btn-add-sensor:hover {
+    background: #1565c0;
+}
+
+.btn-calibrate:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-add-sensor {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+}
+
+/* Urządzenia */
+.devices-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.device-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: #f9f9f9;
+    border-radius: var(--radius-md);
+}
+
+.device-info {
+    flex: 1;
+}
+
+.device-name {
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-xs);
+}
+
+.device-status {
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+/* Prywatność */
+.privacy-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.privacy-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    transition: background 0.3s ease;
+}
+
+.privacy-link:hover {
+    background: #f0f0f0;
+}
+
+/* ==================== FORMULARZE ==================== */
+.schedule-form-container,
+.camera-form-container,
+.sensor-details-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.btn-back {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-back:hover {
+    background: #e0e0e0;
+}
+
+.form-header h1 {
+    font-size: 2rem;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.form-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.form-hint {
+    display: block;
+    margin-top: var(--spacing-xs);
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Selector dni tygodnia */
+.days-selector {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.day-checkbox {
+    position: relative;
+    cursor: pointer;
+}
+
+.day-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.day-checkbox span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    font-weight: 600;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.day-checkbox input:checked+span {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.day-checkbox:hover span {
+    border-color: var(--color-primary);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    background: #1565c0;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+/* ==================== SZCZEGÓŁY CZUJNIKA ==================== */
+.sensor-details-container {
+    width: 100%;
+}
+
+.details-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.current-value-card,
+.historical-chart-card,
+.statistics-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.current-value-card {
+    grid-column: 1;
+}
+
+.historical-chart-card {
+    grid-column: 1 / -1;
+}
+
+.statistics-card {
+    grid-column: 1 / -1;
+}
+
+.current-value-card h2,
+.historical-chart-card h2,
+.statistics-card h2 {
+    font-size: 1.3rem;
+    color: #1a1a2e;
+    margin-bottom: var(--spacing-md);
+}
+
+.value-display {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+}
+
+.value-display .value {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.value-display .unit {
+    font-size: 2rem;
+    color: #666;
+}
+
+.last-update {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+}
+
+.chart-container {
+    height: 300px;
+    margin-top: var(--spacing-md);
+}
+
+.chart-container canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.stat-item {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: #f9f9f9;
+    border-radius: var(--radius-md);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-content {
+        grid-template-columns: 1fr;
+    }
+
+    .current-value-card,
+    .historical-chart-card,
+    .statistics-card {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .camera-manage-card {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .control-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .camera-controls {
+        flex-wrap: wrap;
+    }
+
+    .control-btn {
+        flex: 1;
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-center {
+        display: none;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .sensor-value {
+        font-size: 2.5rem;
+    }
+
+    .value-display .value {
+        font-size: 3rem;
+    }
+
+    .cameras-grid {
+        grid-template-columns: 1fr;
+    }
+}

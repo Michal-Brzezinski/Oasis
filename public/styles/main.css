@@ -47,6 +47,15 @@ body {
     height: calc(100vh - 100px);
 }
 
+.live-stream {
+    margin-bottom: 30px;
+}
+
+.live-stream h2 {
+    margin-bottom: 10px;
+}
+
+
 @media screen and (max-width: 480px) {
 
     /* do mobilnych */
