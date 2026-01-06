@@ -26,17 +26,23 @@ class UserRepository extends Repository
         return $users; // Zwróci false, jeśli nie znaleziono użytkownika
     }
 
-    public function createUser(string $email, string $hashedpassword, string $firstname, string $lastname)
+    public function createUser(string $email, string $hashedPassword, string $firstname, string $lastname)
     {
-        // zrobić to w bloku try-catch i wtedy wywołać komunikat dodane/nie dodano usera
+        $fullName = $firstname . ' ' . $lastname;
+
+        // Możesz wygenerować nickname automatycznie
+        $nickname = strtolower($firstname . '.' . $lastname);
+
         $stmt = $this->database->prepare('
-        INSERT INTO users (email, password, firstName, lastname) VALUES(?,?,?,?);
+            INSERT INTO users (email, password_hash, nickname, full_name)
+            VALUES (:email, :password_hash, :nickname, :full_name)
         ');
+
         $stmt->execute([
-            $email,
-            $hashedpassword,
-            $firstname,
-            $lastname
+            ':email' => $email,
+            ':password_hash' => $hashedPassword,
+            ':nickname' => $nickname,
+            ':full_name' => $fullName
         ]);
     }
 }

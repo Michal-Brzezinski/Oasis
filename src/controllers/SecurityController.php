@@ -47,7 +47,7 @@ class SecurityController extends AppController
         }
 
         // Weryfikacja hasła
-        if (!password_verify($password, $user['password'])) {
+        if (!password_verify($password, $user['password_hash'])) {
             return $this->render('login', ['message' => 'Nieprawidłowe hasło']);
         }
 
