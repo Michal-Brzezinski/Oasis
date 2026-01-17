@@ -1,0 +1,114 @@
+@startuml
+!theme plain
+
+entity "User" as User {
+  *user_id : UUID
+  --
+  email : String
+  password_hash : String
+  display_name : String
+  role : {OWNER | WORKER | ADMIN}
+  is_active : Boolean
+  created_at : Timestamp
+  updated_at : Timestamp
+}
+
+entity "Region" as Region {
+  *region_id : UUID
+  --
+  owner_id : UUID [FK -> User.user_id]
+  name : String
+  description : String
+  location : String
+  created_at : Timestamp
+  updated_at : Timestamp
+}
+
+entity "Sensor" as Sensor {
+  *sensor_id : UUID
+  --
+  region_id : UUID [FK -> Region.region_id]
+  type : {SOIL_MOISTURE | TEMPERATURE | HUMIDITY | PH | LIGHT | PRESSURE}
+  name : String
+  is_active : Boolean
+  created_at : Timestamp
+}
+
+entity "SensorReading" as SensorReading {
+  *reading_id : UUID
+  --
+  sensor_id : UUID [FK -> Sensor.sensor_id]
+  measured_at : Timestamp
+  value : Decimal
+  unit : String
+  status : {OK | WARNING | ERROR}
+}
+
+entity "Camera" as Camera {
+  *camera_id : UUID
+  --
+  region_id : UUID [FK -> Region.region_id]
+  name : String
+  stream_url : String
+  is_active : Boolean
+}
+
+entity "Schedule" as Schedule {
+  *schedule_id : UUID
+  --
+  region_id : UUID [FK -> Region.region_id]
+  created_by : UUID [FK -> User.user_id]
+  name : String
+  cron_expression : String
+  volume_liters : Decimal
+  is_enabled : Boolean
+}
+
+entity "WateringAction" as WateringAction {
+  *action_id : UUID
+  --
+  region_id : UUID [FK -> Region.region_id]
+  schedule_id : UUID [FK -> Schedule.schedule_id]
+  initiated_by : UUID [FK -> User.user_id]
+  started_at : Timestamp
+  stopped_at : Timestamp
+  status : {PENDING | RUNNING | COMPLETED | CANCELLED | FAILED}
+}
+
+entity "Notification" as Notification {
+  *notification_id : UUID
+  --
+  user_id : UUID [FK -> User.user_id]
+  region_id : UUID [FK -> Region.region_id]
+  sensor_id : UUID [FK -> Sensor.sensor_id]
+  type : {LOW_MOISTURE | PARAM_THRESHOLD | SENSOR_ERROR | CAMERA_OFFLINE}
+  channel : {EMAIL | SMS | PUSH}
+  status : {QUEUED | SENT | FAILED}
+  created_at : Timestamp
+}
+
+entity "Report" as Report {
+  *report_id : UUID
+  --
+  user_id : UUID [FK -> User.user_id]
+  region_id : UUID [FK -> Region.region_id]
+  title : String
+  generated_at : Timestamp
+  format : {CSV | PDF | JSON}
+}
+
+User ||--o{ Region : "owns"
+Region ||--o{ Sensor : "has"
+Sensor ||--o{ SensorReading : "produces"
+Region ||--o{ Camera : "has"
+Region ||--o{ Schedule : "has"
+Schedule ||--o{ WateringAction : "triggers"
+User ||--o{ WateringAction : "initiates"
+Region ||--o{ WateringAction : "records"
+User ||--o{ Notification : "receives"
+Region ||--o{ Notification : "generates"
+Sensor ||--o{ Notification : "alerts"
+User ||--o{ Report : "creates"
+Region ||--o{ Report : "summarizes"
+
+@enduml

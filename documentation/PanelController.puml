@@ -1,0 +1,22 @@
+@startuml
+!theme plain
+
+actor User
+
+User -> PanelController : GET /dashboard/panel
+PanelController -> RegionRepository : getRegionsByOwner(userId)
+RegionRepository --> PanelController : Region[]
+PanelController -> SensorRepository : getSensorsByRegion(regionId)
+SensorRepository --> PanelController : Sensor[]
+PanelController -> View : render(index)
+
+User -> PanelController : GET /dashboard/panel/sensorDetails?id=XX
+PanelController -> SensorRepository : getSensorById(id)
+SensorRepository --> PanelController : Sensor
+PanelController -> View : render(details)
+
+User -> PanelController : GET /dashboard/panel/getSensorData?id=XX
+PanelController -> SensorRepository : getSensorById(id)
+PanelController -> JSON : return mock data
+
+@enduml

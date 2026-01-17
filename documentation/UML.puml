@@ -1,0 +1,157 @@
+@startuml
+!theme plain
+
+package "Web" {
+  class Routing
+
+  class AppController {
+    +isGet()
+    +isPost()
+    +render()
+    +redirect()
+    +json()
+    +allowMethods()
+  }
+
+  class SecurityController {
+    +login()
+    +register()
+    +logout()
+  }
+
+  class DashboardController
+  class PanelController
+  class SchedulesController
+  class CamerasController
+  class SettingsController
+}
+
+package "Domain" {
+  class User {
+    -id : int
+    -email : string
+    -passwordHash : string
+    -nickname : string
+    -fullName : string
+    -role : string
+    -createdAt : string
+    -updatedAt : string
+  }
+
+  class Region
+  class Sensor
+  class Camera
+  class Schedule
+  class WateringAction
+}
+
+package "Infrastructure" {
+
+  class Database {
+    +getInstance()
+    +getConnection()
+  }
+
+  class Repository {
+    #database : PDO
+  }
+
+  class UserRepository {
+    +getUsers() : array<User>
+    +getUserByEmail(email) : User|false
+    +createUser(email, hash, firstname, lastname) : void
+    -mapToUser(row) : User
+  }
+
+  class RegionRepository {
+    +getRegions() : array<Region>
+    +getRegionById(id) : Region|false
+    -mapToRegion(row) : Region
+  }
+
+  class SensorRepository {
+    +getSensorsByRegion(regionId) : array<Sensor>
+    +getSensorById(id) : Sensor|false
+    -mapToSensor(row) : Sensor
+  }
+
+  class CameraRepository {
+    +getCamerasByRegion(regionId) : array<Camera>
+    +getCameraById(id) : Camera|false
+    -mapToCamera(row) : Camera
+  }
+
+  class ScheduleRepository {
+    +getSchedulesByRegion(regionId) : array<Schedule>
+    +getScheduleById(id) : Schedule|false
+    -mapToSchedule(row) : Schedule
+  }
+
+  class WateringRepository {
+    +getActionsBySchedule(scheduleId) : array<WateringAction>
+    +getActionsByUser(userId) : array<WateringAction>
+    -mapToWateringAction(row) : WateringAction
+  }
+}
+
+' -------------------------
+' ROUTING
+' -------------------------
+Routing --> SecurityController
+Routing --> DashboardController
+Routing --> PanelController
+Routing --> SchedulesController
+Routing --> CamerasController
+Routing --> SettingsController
+
+' -------------------------
+' CONTROLLERS INHERITANCE
+' -------------------------
+AppController <|-- SecurityController
+AppController <|-- DashboardController
+AppController <|-- PanelController
+AppController <|-- SchedulesController
+AppController <|-- CamerasController
+AppController <|-- SettingsController
+
+' -------------------------
+' DATABASE & REPOSITORIES
+' -------------------------
+Database --> Repository : provides PDO
+
+Repository <|-- UserRepository
+Repository <|-- RegionRepository
+Repository <|-- SensorRepository
+Repository <|-- CameraRepository
+Repository <|-- ScheduleRepository
+Repository <|-- WateringRepository
+
+UserRepository --> User
+RegionRepository --> Region
+SensorRepository --> Sensor
+CameraRepository --> Camera
+ScheduleRepository --> Schedule
+WateringRepository --> WateringAction
+
+' -------------------------
+' CONTROLLERS → REPOSITORIES
+' -------------------------
+SecurityController --> UserRepository
+DashboardController --> RegionRepository
+PanelController --> SensorRepository
+CamerasController --> CameraRepository
+SchedulesController --> ScheduleRepository
+
+' SettingsController intentionally has no repository (unless you add one)
+
+' -------------------------
+' DOMAIN RELATIONS
+' -------------------------
+User "1" -- "N" Region
+Region "1" -- "N" Sensor
+Region "1" -- "N" Camera
+Region "1" -- "N" Schedule
+Schedule "1" -- "N" WateringAction
+User "1" -- "N" WateringAction
+
+@enduml

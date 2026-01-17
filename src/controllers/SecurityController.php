@@ -47,14 +47,18 @@ class SecurityController extends AppController
         }
 
         // Weryfikacja hasła
-        if (!password_verify($password, $user['password_hash'])) {
+        if (!password_verify($password, $user->getPasswordHash())) {
             return $this->render('login', ['message' => 'Nieprawidłowe hasło']);
         }
+        // START SESJI
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        // TODO: Stworzenie sesji użytkownika
-        // session_start();
-        // $_SESSION['user_id'] = $user['id'];
-        // $_SESSION['user_email'] = $user['email'];
+        // ZAPIS SESJI
+        $_SESSION['user_id'] = $user->getId();
+        $_SESSION['user_email'] = $user->getEmail();
+        $_SESSION['user_role'] = $user->getRole();
 
         // Przekierowanie do dashboardu
         $url = "http://$_SERVER[HTTP_HOST]";
@@ -139,9 +143,8 @@ class SecurityController extends AppController
                 "message" => "Konto zostało utworzone pomyślnie! Możesz się teraz zalogować."
             ]);
         } catch (Exception $e) {
-            // Błąd podczas tworzenia konta
             return $this->render('register', [
-                'message' => 'Wystąpił błąd podczas tworzenia konta. Spróbuj ponownie.'
+                'message' => $e->getMessage()
             ]);
         }
     }

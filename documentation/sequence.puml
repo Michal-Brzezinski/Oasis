@@ -1,0 +1,33 @@
+@startuml
+!theme plain
+
+actor User
+participant "Browser" as B
+participant "SecurityController" as SC
+participant "UserRepository" as UR
+participant "Database" as DB
+
+User -> B: Wysyła formularz logowania (POST /login)
+B -> SC: POST /login (email, password, csrf_token)
+
+SC -> SC: validateCSRF()
+SC -> SC: validateInput(email, password)
+
+SC -> UR: findByEmail(email)
+UR -> DB: SELECT id, email, password_hash, role FROM users WHERE email = ?
+DB --> UR: user row / null
+UR --> SC: User / null
+
+SC -> SC: verify password (password_verify)
+SC -> SC: check login attempts / rate limiting
+
+alt poprawne dane
+  SC -> SC: session_regenerate_id()
+  SC -> SC: set $_SESSION['user_id'], role, etc.
+  SC -> B: redirect /dashboard (302)
+else błędne dane
+  SC -> SC: log failed attempt (login_attempts)
+  SC -> B: render login view with generic error\n"Email lub hasło niepoprawne"
+end
+
+@enduml

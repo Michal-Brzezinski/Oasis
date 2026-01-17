@@ -66,4 +66,25 @@ class AppController
             }
         }
     }
+
+    protected function requireLogin(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (empty($_SESSION['user_id'])) {
+            http_response_code(302);
+            header('Location: /login');
+            exit();
+        }
+    }
+
+    protected function getCurrentUserId(): ?int
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+    }
 }

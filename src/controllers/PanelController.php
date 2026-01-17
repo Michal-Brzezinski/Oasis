@@ -1,141 +1,94 @@
 <?php
 
-require_once 'DashboardController.php';
-require_once __DIR__ . '/../repository/SensorsRepository.php';
+require_once 'src/controllers/AppController.php';
+require_once 'src/repository/RegionRepository.php';
+require_once 'src/repository/SensorRepository.php';
 
-class PanelController extends DashboardController
+class PanelController extends AppController
 {
-    private $sensorsRepository;
+    private RegionRepository $regionRepository;
+    private SensorRepository $sensorRepository;
 
     public function __construct()
     {
-        parent::__construct();
-        // $this->sensorsRepository = new SensorsRepository();
+        $this->regionRepository = new RegionRepository();
+        $this->sensorRepository = new SensorRepository();
     }
 
-    /**
-     * Strona główna - Dashboard z kartami czujników
-     */
-    public function index()
+    public function index(): void
     {
-        $sensorsData = $this->getSensorsData();
+        $this->requireLogin();
 
-        $this->renderDashboard('dashboard/panel/index', [
-            'pageTitle' => 'Dashboard',
-            'activeTab' => 'panel',
-            'sensorsData' => $sensorsData
-        ]);
-    }
+        $userId = $this->getCurrentUserId();
+        $regions = $this->regionRepository->getRegionsByOwner($userId);
 
-    /**
-     * API endpoint - pobiera aktualne dane z czujników (AJAX)
-     */
-    public function getSensorData()
-    {
-        header('Content-Type: application/json');
+        // domyślny region (pierwszy)
+        $selectedRegionId = $_GET['region'] ?? ($regions[0]->getId() ?? null);
 
-        $sensorId = $_GET['id'] ?? null;
-
-        if (!$sensorId) {
-            echo json_encode(['error' => 'Sensor ID required']);
+        if (!$selectedRegionId) {
+            $this->render('dashboard/panel/index', [
+                'regions' => $regions,
+                'sensors' => []
+            ]);
             return;
         }
 
-        // TODO: Pobierz rzeczywiste dane z bazy
-        $data = [
-            'temperature' => round(20 + rand(0, 80) / 10, 1),
-            'humidity' => rand(40, 80),
-            'pressure' => rand(990, 1030),
+        $sensors = $this->sensorRepository->getSensorsByRegion((int)$selectedRegionId);
+
+        $this->render('dashboard/panel/index', [
+            'regions' => $regions,
+            'selectedRegionId' => $selectedRegionId,
+            'sensors' => $sensors
+        ]);
+    }
+
+    public function sensorDetails(): void
+    {
+        $this->requireLogin();
+
+        if (!isset($_GET['id'])) {
+            http_response_code(400);
+            echo "Missing sensor ID";
+            return;
+        }
+
+        $sensorId = (int)$_GET['id'];
+        $sensor = $this->sensorRepository->getSensorById($sensorId);
+
+        if (!$sensor) {
+            http_response_code(404);
+            echo "Sensor not found";
+            return;
+        }
+
+        $this->render('dashboard/panel/details', [
+            'sensor' => $sensor
+        ]);
+    }
+
+    public function getSensorData()
+    {
+        $this->requireLogin();
+
+        if (!isset($_GET['id'])) {
+            return $this->json(['error' => 'Missing sensor ID'], 400);
+        }
+
+        $sensorId = (int)$_GET['id'];
+        $sensor = $this->sensorRepository->getSensorById($sensorId);
+
+        if (!$sensor) {
+            return $this->json(['error' => 'Sensor not found'], 404);
+        }
+
+        // Na razie mock — później pobierzemy z MQTT/API
+        $mockData = [
+            'sensorId' => $sensorId,
+            'value' => rand(20, 80),
+            'unit' => 'percent',
             'timestamp' => date('Y-m-d H:i:s')
         ];
 
-        echo json_encode($data);
-    }
-
-    /**
-     * Szczegóły czujnika - wykres historyczny
-     */
-    public function sensorDetails()
-    {
-        $sensorId = $_GET['id'] ?? null;
-        $sensorType = $_GET['type'] ?? 'temperature';
-
-        if (!$sensorId) {
-            $this->redirect('/dashboard/panel');
-            return;
-        }
-
-        $sensorData = $this->getSensorById($sensorId);
-        $historicalData = $this->getHistoricalData($sensorId, $sensorType);
-
-        $this->renderDashboard('dashboard/panel/details', [
-            'pageTitle' => 'Szczegóły czujnika',
-            'activeTab' => 'panel',
-            'sensor' => $sensorData,
-            'historicalData' => $historicalData,
-            'sensorType' => $sensorType
-        ]);
-    }
-
-    // Metody pomocnicze
-
-    private function getSensorsData()
-    {
-        // TODO: Pobierz z bazy danych
-        return [
-            'temperature' => [
-                'value' => 24,
-                'unit' => '°C',
-                'icon' => '🌡️',
-                'chartData' => $this->generateMockChartData(),
-                'color' => 'blue'
-            ],
-            'humidity' => [
-                'value' => 60,
-                'unit' => '%',
-                'icon' => '💧',
-                'chartData' => $this->generateMockChartData(),
-                'color' => 'green'
-            ],
-            'pressure' => [
-                'value' => 1012,
-                'unit' => 'hPa',
-                'icon' => '🌪️',
-                'chartData' => $this->generateMockChartData(),
-                'color' => 'navy'
-            ]
-        ];
-    }
-
-    private function getSensorById($id)
-    {
-        // TODO: Implementacja
-        return [
-            'id' => $id,
-            'name' => 'Czujnik #' . $id,
-            'type' => 'temperature'
-        ];
-    }
-
-    private function getHistoricalData($sensorId, $type)
-    {
-        // TODO: Pobierz z bazy
-        $data = [];
-        for ($i = 23; $i >= 0; $i--) {
-            $data[] = [
-                'time' => date('H:i', strtotime("-{$i} hours")),
-                'value' => rand(18, 28)
-            ];
-        }
-        return $data;
-    }
-
-    private function generateMockChartData()
-    {
-        $data = [];
-        for ($i = 0; $i < 24; $i++) {
-            $data[] = rand(40, 100);
-        }
-        return $data;
+        return $this->json($mockData);
     }
 }

@@ -2,9 +2,6 @@
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/PanelController.php';
-require_once 'src/controllers/SchedulesController.php';
-require_once 'src/controllers/CamerasController.php';
-require_once 'src/controllers/SettingsController.php';
 
 class Routing
 {
