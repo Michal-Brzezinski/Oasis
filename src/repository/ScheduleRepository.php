@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Repository.php';
+require_once __DIR__ . '/../repository/Repository.php';
 require_once __DIR__ . '/../models/Schedule.php';
 
 class ScheduleRepository extends Repository
@@ -15,6 +15,63 @@ class ScheduleRepository extends Repository
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return array_map(fn($r) => $this->mapToSchedule($r), $rows);
+    }
+
+    public function getScheduleById(int $id): ?Schedule
+    {
+        $stmt = $this->database->prepare('
+            SELECT * FROM schedules WHERE id = :id LIMIT 1
+        ');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $this->mapToSchedule($row) : null;
+    }
+
+    public function createSchedule(int $regionId, string $name, string $cron, float $liters): void
+    {
+        $stmt = $this->database->prepare('
+            INSERT INTO schedules (region_id, name, cron_expression, volume_liters)
+            VALUES (:region_id, :name, :cron, :liters)
+        ');
+
+        $stmt->execute([
+            ':region_id' => $regionId,
+            ':name' => $name,
+            ':cron' => $cron,
+            ':liters' => $liters
+        ]);
+    }
+
+    public function updateSchedule(int $id, string $name, string $cron, float $liters, bool $enabled): void
+    {
+        $stmt = $this->database->prepare('
+        UPDATE schedules
+        SET name = :name,
+            cron_expression = :cron,
+            volume_liters = :liters,
+            is_enabled = :enabled,
+            updated_at = NOW()
+        WHERE id = :id
+    ');
+
+        // Bindujemy wartości z jawnym typem
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':cron', $cron, PDO::PARAM_STR);
+        $stmt->bindValue(':liters', $liters, PDO::PARAM_STR); // NUMERIC w Postgres może przyjąć string
+        $stmt->bindValue(':enabled', $enabled, PDO::PARAM_BOOL); // boolean poprawnie
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+
+    public function deleteSchedule(int $id): void
+    {
+        $stmt = $this->database->prepare('DELETE FROM schedules WHERE id = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     private function mapToSchedule(array $row): Schedule

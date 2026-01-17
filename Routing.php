@@ -2,6 +2,12 @@
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/DashboardController.php';
 require_once 'src/controllers/PanelController.php';
+require_once 'src/controllers/SchedulesController.php';
+require_once 'src/controllers/CamerasController.php';
+require_once 'src/controllers/WateringController.php';
+require_once 'src/controllers/SensorsController.php';
+require_once 'src/controllers/SettingsController.php';
+
 
 class Routing
 {
@@ -146,12 +152,37 @@ class Routing
                 'controller' => 'SettingsController',
                 'action' => 'changeLanguage'
             ],
+            // ===== PODLEWANIE (WATERING) =====
+            'dashboard/watering' => [
+                'controller' => 'WateringController',
+                'action' => 'index'
+            ],
+            'dashboard/watering/start' => [
+                'controller' => 'WateringController',
+                'action' => 'start'
+            ],
+            'dashboard/watering/fail' => [
+                'controller' => 'WateringController',
+                'action' => 'fail'
+            ],
+            // ===== CZUJNIKI =====
+            'dashboard/sensors' => [
+                'controller' => 'SensorsController',
+                'action' => 'index'
+            ],
+            'dashboard/sensors/add' => [
+                'controller' => 'SensorsController',
+                'action' => 'add'
+            ],
+            'dashboard/sensors/edit' => [
+                'controller' => 'SensorsController',
+                'action' => 'edit'
+            ],
+            'dashboard/sensors/delete' => [
+                'controller' => 'SensorsController',
+                'action' => 'delete'
+            ],
 
-            // ===== LEGACY (stare endpointy - można usunąć) =====
-            'search-cards' => [
-                'controller' => 'DashboardController',
-                'action' => 'search'
-            ]
         ];
     }
 
@@ -176,7 +207,7 @@ class Routing
             $controllerObj->$action();
         } else {
             http_response_code(404);
-            include 'public/views/404.html';
+            include 'public/views/404.php';
         }
     }
 }

@@ -1,0 +1,193 @@
+<mxfile host="65bd71144e">
+    <diagram name="Oasis Architecture" id="oasis-arch">
+        <mxGraphModel dx="1388" dy="964" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1400" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="pkgWeb" value="Web" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="100" width="800" height="1100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Routing" value="Routing" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="40" y="40" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="AppController" value="AppController&#xa;---------------------&#xa;+ isGet()&#xa;+ isPost()&#xa;+ render()&#xa;+ redirect()&#xa;+ json()&#xa;+ allowMethods()" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="300" y="40" width="260" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="SecurityController" value="SecurityController&#xa;---------------------&#xa;+ login()&#xa;+ register()&#xa;+ logout()" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="40" y="240" width="260" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="DashboardController" value="DashboardController" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="340" y="240" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="PanelController" value="PanelController" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="600" y="240" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="SchedulesController" value="SchedulesController" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="40" y="380" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="CamerasController" value="CamerasController" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="340" y="380" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="SettingsController" value="SettingsController" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgWeb" vertex="1">
+                    <mxGeometry x="600" y="380" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pkgDomain" value="Domain" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="100" width="800" height="1100" as="geometry"/>
+                </mxCell>
+                <mxCell id="User" value="User&#xa;---------------------&#xa;- id : int&#xa;- email : string&#xa;- passwordHash : string&#xa;- nickname : string&#xa;- fullName : string&#xa;- role : string&#xa;- createdAt : string&#xa;- updatedAt : string" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="40" y="40" width="280" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="Region" value="Region" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="380" y="40" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Sensor" value="Sensor" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="640" y="40" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Camera" value="Camera" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="380" y="160" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Schedule" value="Schedule" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="640" y="160" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="WateringAction" value="WateringAction" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgDomain" vertex="1">
+                    <mxGeometry x="380" y="280" width="220" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="pkgInfra" value="Infrastructure" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="1" vertex="1">
+                    <mxGeometry x="1900" y="100" width="860" height="1100" as="geometry"/>
+                </mxCell>
+                <mxCell id="Database" value="Database&#xa;---------------------&#xa;+ getInstance()&#xa;+ getConnection()" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="43" y="40" width="258" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="Repository" value="Repository&#xa;---------------------&#xa;# database : PDO" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="344" y="40" width="279.5" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="UserRepository" value="UserRepository&#xa;---------------------&#xa;+ getUsers() : array&lt;User&gt;&#xa;+ getUserByEmail(email) : User|false&#xa;+ createUser(email, hash, firstname, lastname) : void&#xa;- mapToUser(row) : User" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="43" y="200" width="365.5" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="RegionRepository" value="RegionRepository&#xa;---------------------&#xa;+ getRegions() : array&lt;Region&gt;&#xa;+ getRegionById(id) : Region|false&#xa;- mapToRegion(row) : Region" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="451.5" y="200" width="365.5" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="SensorRepository" value="SensorRepository&#xa;---------------------&#xa;+ getSensorsByRegion(regionId) : array&lt;Sensor&gt;&#xa;+ getSensorById(id) : Sensor|false&#xa;- mapToSensor(row) : Sensor" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="43" y="420" width="365.5" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="CameraRepository" value="CameraRepository&#xa;---------------------&#xa;+ getCamerasByRegion(regionId) : array&lt;Camera&gt;&#xa;+ getCameraById(id) : Camera|false&#xa;- mapToCamera(row) : Camera" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="451.5" y="420" width="365.5" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="ScheduleRepository" value="ScheduleRepository&#xa;---------------------&#xa;+ getSchedulesByRegion(regionId) : array&lt;Schedule&gt;&#xa;+ getScheduleById(id) : Schedule|false&#xa;- mapToSchedule(row) : Schedule" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="43" y="640" width="365.5" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="WateringRepository" value="WateringRepository&#xa;---------------------&#xa;+ getActionsBySchedule(scheduleId) : array&lt;WateringAction&gt;&#xa;+ getActionsByUser(userId) : array&lt;WateringAction&gt;&#xa;- mapToWateringAction(row) : WateringAction" style="shape=rectangle;whiteSpace=wrap;html=1;strokeWidth=1;" parent="pkgInfra" vertex="1">
+                    <mxGeometry x="430" y="670" width="408.5" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="SecurityController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="DashboardController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="PanelController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="SchedulesController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r5" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="CamerasController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r6" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Routing" target="SettingsController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh1" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="SecurityController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh2" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="DashboardController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh3" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="PanelController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh4" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="SchedulesController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh5" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="CamerasController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inh6" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="AppController" target="SettingsController" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="db1" value="provides PDO" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="Database" target="Repository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri1" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="UserRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri2" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="RegionRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri3" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="SensorRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri4" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="CameraRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri5" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="ScheduleRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ri6" style="endArrow=block;endFill=0;strokeWidth=1;" parent="1" source="Repository" target="WateringRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ud1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="UserRepository" target="User" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rd1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="RegionRepository" target="Region" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="sd1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="SensorRepository" target="Sensor" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cd1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="CameraRepository" target="Camera" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="scd1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="ScheduleRepository" target="Schedule" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="wd1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="WateringRepository" target="WateringAction" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cr1" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="SecurityController" target="UserRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cr2" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="DashboardController" target="RegionRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cr3" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="PanelController" target="SensorRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cr4" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="CamerasController" target="CameraRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cr5" style="endArrow=block;html=1;strokeWidth=1;" parent="1" source="SchedulesController" target="ScheduleRepository" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel1" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="User" target="Region" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel2" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="Region" target="Sensor" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel3" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="Region" target="Camera" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel4" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="Region" target="Schedule" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel5" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="Schedule" target="WateringAction" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rel6" value="1..N" style="endArrow=none;dashed=1;strokeWidth=1;" parent="1" source="User" target="WateringAction" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

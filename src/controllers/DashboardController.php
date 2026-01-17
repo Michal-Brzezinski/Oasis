@@ -19,8 +19,9 @@ class DashboardController extends AppController
         $userId = $this->getCurrentUserId();
         $regions = $this->regionRepository->getRegionsByOwner($userId);
 
-        $this->render('dashboard/layout', [
-            'regions' => $regions
+        $this->render('dashboard/index', [
+            'regions' => $regions,
+            'pageTitle' => 'Dashboard'
         ]);
     }
 }

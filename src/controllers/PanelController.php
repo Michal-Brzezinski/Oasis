@@ -22,10 +22,17 @@ class PanelController extends AppController
         $userId = $this->getCurrentUserId();
         $regions = $this->regionRepository->getRegionsByOwner($userId);
 
-        // domyślny region (pierwszy)
-        $selectedRegionId = $_GET['region'] ?? ($regions[0]->getId() ?? null);
+        $selectedRegionId = null;
 
-        if (!$selectedRegionId) {
+        // Wybór regionu z GET lub domyślnie pierwszego w tablicy
+        if (isset($_GET['region'])) {
+            $selectedRegionId = (int) $_GET['region'];
+        } elseif (!empty($regions)) {
+            $selectedRegionId = $regions[0]->getId();
+        }
+
+        // Jeśli nie ma żadnego regionu, przekazujemy pustą listę sensorów
+        if ($selectedRegionId === null) {
             $this->render('dashboard/panel/index', [
                 'regions' => $regions,
                 'sensors' => []
@@ -33,7 +40,7 @@ class PanelController extends AppController
             return;
         }
 
-        $sensors = $this->sensorRepository->getSensorsByRegion((int)$selectedRegionId);
+        $sensors = $this->sensorRepository->getSensorsByRegion($selectedRegionId);
 
         $this->render('dashboard/panel/index', [
             'regions' => $regions,
@@ -41,6 +48,7 @@ class PanelController extends AppController
             'sensors' => $sensors
         ]);
     }
+
 
     public function sensorDetails(): void
     {

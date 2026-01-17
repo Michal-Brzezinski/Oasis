@@ -1,35 +1,49 @@
-<?php
-
-/** @var Region[] $regions */ ?>
 <!DOCTYPE html>
 <html lang="pl">
 
 <head>
     <meta charset="UTF-8">
-    <title>Oasis – Dashboard</title>
+    <title><?= $pageTitle ?? 'Oasis Dashboard' ?></title>
     <link rel="stylesheet" href="/public/styles/dashboard.css">
+    <link rel="icon" type="image/png" href="public/img/oasis_favicon.png">
 </head>
 
 <body>
-    <header>
-        <h1>Oasis – Dashboard</h1>
-    </header>
 
-    <main>
-        <section>
-            <h2>Twoje regiony</h2>
-            <ul>
-                <?php foreach ($regions as $region): ?>
-                    <li>
-                        <?= htmlspecialchars($region->getName(), ENT_QUOTES, 'UTF-8') ?>
-                        <?php if ($region->getDescription()): ?>
-                            – <?= htmlspecialchars($region->getDescription(), ENT_QUOTES, 'UTF-8') ?>
-                        <?php endif; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </section>
-    </main>
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/public/img/oasis_logo2.png" alt="Oasis Logo">
+                <h2>Oasis</h2>
+            </div>
+
+            <nav>
+                <a href="/dashboard/panel">Panel</a>
+                <a href="/dashboard/sensors">Czujniki</a>
+                <a href="/dashboard/cameras">Kamery</a>
+                <a href="/dashboard/schedules">Harmonogramy</a>
+                <a href="/dashboard/watering">Podlewanie</a>
+                <a href="/dashboard/settings">Ustawienia</a>
+                <a href="/logout" class="logout">Wyloguj</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <h1><?= $pageTitle ?? "Dashboard" ?></h1>
+                <div class="user-info">
+                    <span><?= $_SESSION['full_name'] ?? 'Użytkownik' ?></span>
+                </div>
+            </header>
+
+            <section class="page-content">
+                <?php include $contentView; ?>
+            </section>
+        </main>
+
+    </div>
+
 </body>
 
 </html>

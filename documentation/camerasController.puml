@@ -1,0 +1,34 @@
+@startuml
+!theme plain
+
+actor User
+
+User -> CamerasController : GET /dashboard/cameras
+CamerasController -> RegionRepository : getRegionsByOwner()
+CamerasController -> CamerasRepository : getCamerasByRegion()
+CamerasController -> View : render(index)
+
+User -> CamerasController : GET /dashboard/cameras/add
+CamerasController -> View : render(add)
+
+User -> CamerasController : POST /dashboard/cameras/add
+CamerasController -> CamerasRepository : createCamera()
+CamerasController -> User : redirect
+
+User -> CamerasController : GET /dashboard/cameras/edit?id=XX
+CamerasController -> CamerasRepository : getCameraById()
+CamerasController -> View : render(edit)
+
+User -> CamerasController : POST /dashboard/cameras/edit?id=XX
+CamerasController -> CamerasRepository : updateCamera()
+CamerasController -> User : redirect
+
+User -> CamerasController : GET /dashboard/cameras/delete?id=XX
+CamerasController -> CamerasRepository : deleteCamera()
+CamerasController -> User : redirect
+
+User -> CamerasController : GET /dashboard/cameras/view?id=XX
+CamerasController -> CamerasRepository : getCameraById()
+CamerasController -> View : render(view)
+
+@enduml

@@ -5,7 +5,7 @@
 
 <h1>Panel – czujniki</h1>
 
-<form method="GET" action="/dashboard/panel">
+<form method="GET" action="/dashboard/panel" class="filter-bar">
     <label>Wybierz region:</label>
     <select name="region" onchange="this.form.submit()">
         <?php foreach ($regions as $region): ?>

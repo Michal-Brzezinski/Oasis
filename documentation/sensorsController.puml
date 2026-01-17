@@ -1,0 +1,30 @@
+@startuml
+!theme plain
+
+actor User
+
+User -> SensorsController : GET /dashboard/sensors
+SensorsController -> RegionRepository : getRegionsByOwner()
+SensorsController -> SensorRepository : getSensorsByRegion()
+SensorsController -> View : render(index)
+
+User -> SensorsController : GET /dashboard/sensors/add
+SensorsController -> View : render(add)
+
+User -> SensorsController : POST /dashboard/sensors/add
+SensorsController -> SensorRepository : createSensor()
+SensorsController -> User : redirect
+
+User -> SensorsController : GET /dashboard/sensors/edit?id=XX
+SensorsController -> SensorRepository : getSensorById()
+SensorsController -> View : render(edit)
+
+User -> SensorsController : POST /dashboard/sensors/edit?id=XX
+SensorsController -> SensorRepository : updateSensor()
+SensorsController -> User : redirect
+
+User -> SensorsController : GET /dashboard/sensors/delete?id=XX
+SensorsController -> SensorRepository : deleteSensor()
+SensorsController -> User : redirect
+
+@enduml

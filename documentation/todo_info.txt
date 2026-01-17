@@ -15,3 +15,5 @@ _______________________________________________________________
 - DODAĆ LEPSZE ZABEZPIECZENIA Z SESJAMI ABY PO WYLOGOWANIU NIE MOŻNA BYŁO DOSTAĆ SIĘ DO LINKÓW
 - RESPONSYWNOŚĆ POZWALAJĄCA NA PRZEMIESZCZANIE POMIĘDZY KOLEJNYMI ZAKŁADKAMI Z HAMBURGERA
 _______________________________________________________________
+
+- w Watering zamiast mocku zrobić coś co zbiera z API np., albo coś innego, ale coś co można przerwać

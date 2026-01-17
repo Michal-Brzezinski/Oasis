@@ -57,6 +57,7 @@ class SecurityController extends AppController
 
         // ZAPIS SESJI
         $_SESSION['user_id'] = $user->getId();
+        $_SESSION['full_name'] = $user->getFullName();
         $_SESSION['user_email'] = $user->getEmail();
         $_SESSION['user_role'] = $user->getRole();
 

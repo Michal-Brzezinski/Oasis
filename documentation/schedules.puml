@@ -1,0 +1,30 @@
+@startuml
+!theme plain
+
+actor User
+
+User -> SchedulesController : GET /dashboard/schedules
+SchedulesController -> RegionRepository : getRegionsByOwner()
+SchedulesController -> ScheduleRepository : getSchedulesByRegion()
+SchedulesController -> View : render(index)
+
+User -> SchedulesController : GET /dashboard/schedules/add
+SchedulesController -> View : render(add)
+
+User -> SchedulesController : POST /dashboard/schedules/add
+SchedulesController -> ScheduleRepository : createSchedule()
+SchedulesController -> User : redirect
+
+User -> SchedulesController : GET /dashboard/schedules/edit?id=XX
+SchedulesController -> ScheduleRepository : getScheduleById()
+SchedulesController -> View : render(edit)
+
+User -> SchedulesController : POST /dashboard/schedules/edit?id=XX
+SchedulesController -> ScheduleRepository : updateSchedule()
+SchedulesController -> User : redirect
+
+User -> SchedulesController : GET /dashboard/schedules/delete?id=XX
+SchedulesController -> ScheduleRepository : deleteSchedule()
+SchedulesController -> User : redirect
+
+@enduml

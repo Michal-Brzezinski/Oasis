@@ -54,18 +54,22 @@ class AppController
 
         $viewPath = 'public/views/' . $template . '.php';
 
-        if (file_exists($viewPath)) {
-            include $viewPath;
-        } else {
-            // Fallback do .html jeśli .php nie istnieje
-            $htmlPath = 'public/views/' . $template . '.html';
-            if (file_exists($htmlPath)) {
-                include $htmlPath;
-            } else {
-                die("View not found: {$template}");
-            }
+        if (!file_exists($viewPath)) {
+            die("View not found: {$template}");
         }
+
+        // Jeśli to dashboard – użyj layoutu
+        if (str_starts_with($template, 'dashboard/')) {
+            $contentView = $viewPath;
+            include 'public/views/dashboard/layout.php';
+            return;
+        }
+
+        // Jeśli to zwykły widok (login, register)
+        include $viewPath;
     }
+
+
 
     protected function requireLogin(): void
     {

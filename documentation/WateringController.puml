@@ -1,0 +1,20 @@
+@startuml
+!theme plain
+
+actor User
+
+User -> WateringController : GET /dashboard/watering
+WateringController -> RegionRepository : getRegionsByOwner()
+WateringController -> WateringRepository : getActionsByRegion()
+WateringController -> View : render(index)
+
+User -> WateringController : GET /dashboard/watering/start?region=XX
+WateringController -> WateringRepository : startAction()
+WateringController -> WateringRepository : completeAction()
+WateringController -> User : redirect
+
+User -> WateringController : GET /dashboard/watering/fail?id=XX
+WateringController -> WateringRepository : failAction()
+WateringController -> User : redirect
+
+@enduml

@@ -1,22 +1,20 @@
-<div class="sensors-add-view">
-    <form action="/dashboard/sensors/add" method="POST" class="form-card">
-        <div class="form-group">
-            <label for="name">Nazwa czujnika</label>
-            <input type="text" id="name" name="name" required>
-        </div>
+<h2>Dodaj czujnik</h2>
 
-        <div class="form-group">
-            <label for="type">Typ czujnika</label>
-            <select id="type" name="type" required>
-                <option value="temperature">Temperatura</option>
-                <option value="humidity">Wilgotność</option>
-                <option value="soil">Wilgotność gleby</option>
-            </select>
-        </div>
+<form method="POST" class="form-card">
+    <label>Nazwa:</label>
+    <input type="text" name="name" required>
 
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">Dodaj czujnik</button>
-            <a href="/dashboard/sensors" class="btn-secondary">Anuluj</a>
-        </div>
-    </form>
-</div>
+    <label>Typ:</label>
+    <input type="text" name="type" required>
+
+    <label>Region:</label>
+    <select name="region_id">
+        <?php foreach ($regions as $region): ?>
+            <option value="<?= $region->getId() ?>">
+                <?= htmlspecialchars($region->getName()) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <button type="submit" class="btn-primary">Dodaj</button>
+</form>

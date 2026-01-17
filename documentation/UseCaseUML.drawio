@@ -1,0 +1,190 @@
+<mxfile host="65bd71144e">
+    <diagram name="System Oasis Use Cases" id="oasis-uc">
+        <mxGraphModel dx="1188" dy="2164" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="105" value="&lt;b&gt;&lt;font style=&quot;font-size: 20px; color: light-dark(rgb(0, 0, 0), rgb(0, 102, 0));&quot;&gt;System Oasis&lt;/font&gt;&lt;/b&gt;" style="shape=rectangle;rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="400" y="150" width="1200" height="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="UC1: Logowanie&#xa;→ Weryfikacja tożsamości" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="10" y="420" width="200" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="UC2: Rejestracja&#xa;→ Tworzenie konta" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="10" y="600" width="200" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="UC3: Dodanie czujnika&#xa;→ Rejestracja urządzenia" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="970" y="590" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="UC5: Podgląd z kamer&#xa;→ Strumień wideo" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="70" y="290" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="UC6: Ręczne podlewanie&#xa;→ Natychmiastowe uruchomienie zaworu" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="390" y="40" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="UC7: Harmonogram podlewania&#xa;→ Planowanie automatyczne" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="610" y="230" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="UC8: Powiadomienia&#xa;→ Alerty systemowe" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="130" y="170" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="UC9: Analiza danych&#xa;→ Generowanie rekomendacji" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="350" y="200" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="UC4: Podgląd parametrów&#xa;→ Odczyt danych pomiarowych" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="105">
+                    <mxGeometry x="860" y="80" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="Niezarejestrowany użytkownik" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="710" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="116" value="&lt;b&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 128, 0));&quot;&gt;Właściciel&lt;br&gt;uprawy&lt;/font&gt;&lt;/b&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fa6800;fontColor=#000000;strokeColor=#C73500;" vertex="1" parent="1">
+                    <mxGeometry x="1000" y="950" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="&lt;b&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(128, 255, 0));&quot;&gt;Pracownik/&lt;br&gt;Gość&lt;/font&gt;&lt;/b&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="-60" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="Administrator&#xa;systemu" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=5;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" vertex="1" parent="1">
+                    <mxGeometry x="1820" y="40" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="119" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(51, 51, 255));&quot;&gt;&lt;b&gt;Baza danych&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#0050ef;strokeColor=#001DBC;fontColor=#ffffff;" vertex="1" parent="1">
+                    <mxGeometry x="1490" y="-160" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="120" value="Moduł czujników" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="1840" y="510" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="121" value="Moduł kamer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="180" y="490" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="122" value="Sterownik podlewania" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1170" y="-100" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="123" value="Moduł harmonogramu" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1270" y="920" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="124" value="System powiadomień" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="190" y="300" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="125" value="System autoryzacji" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#fad7ac;strokeColor=#b46504;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="900" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="126" value="Moduł analityczny" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="830" y="950" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="127" value="Rejestruje się" style="endArrow=block;html=1;fillColor=#fad9d5;strokeColor=#ae4132;strokeWidth=3;" edge="1" parent="1" source="115" target="107">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="128" value="Tworzy konto" style="endArrow=block;html=1;fillColor=#ffcd28;gradientColor=#ffa500;strokeColor=#d79b00;strokeWidth=3;" edge="1" parent="1" source="125" target="107">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="129" value="Loguje się" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="106">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="130" value="Loguje się" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="106">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="131" value="Weryfikuje dane" style="endArrow=block;html=1;fillColor=#ffcd28;gradientColor=#ffa500;strokeColor=#d79b00;strokeWidth=3;" edge="1" parent="1" source="125" target="106">
+                    <mxGeometry x="-0.3838" y="-6" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="132" value="Dodaje czujnik" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="108">
+                    <mxGeometry x="-0.2797" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="133" value="Przesyła dane" style="endArrow=block;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;" edge="1" parent="1" source="120" target="108">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" value="Zapisuje konfigurację" style="endArrow=block;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=3;" edge="1" parent="1" source="119" target="108">
+                    <mxGeometry x="0.3742" y="7" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="135" value="Monitoruje rośliny" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="114">
+                    <mxGeometry x="0.237" y="-5" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="136" value="Monitoruje rośliny" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="114">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="Dostarcza pomiary" style="endArrow=block;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;" edge="1" parent="1" source="120" target="114">
+                    <mxGeometry x="-0.1452" y="-8" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="138" value="Przechowuje dane" style="endArrow=block;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=3;" edge="1" parent="1" source="119" target="114">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="139" value="Podgląda obraz" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="109">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="140" value="Podgląda obraz" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="109">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="141" value="Udostępnia strumień" style="endArrow=block;html=1;fillColor=#a0522d;strokeColor=#6D1F00;strokeWidth=3;" edge="1" parent="1" source="121" target="109">
+                    <mxGeometry x="-0.1833" y="-3" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="142" value="Uruchamia podlewanie" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="110">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="143" value="Aktywuje zawór" style="endArrow=block;html=1;strokeWidth=3;" edge="1" parent="1" source="122" target="110">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="144" value="Tworzy harmonogram" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="111">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="Tworzy harmonogram" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="111">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="146" value="Wyzwala akcję" style="endArrow=block;html=1;strokeWidth=3;fillColor=#cce5ff;strokeColor=#36393d;" edge="1" parent="1" source="123" target="111">
+                    <mxGeometry x="-0.0729" y="-8" relative="1" as="geometry">
+                        <mxPoint x="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="147" value="Podlewa" style="endArrow=block;html=1;strokeWidth=3;" edge="1" parent="1" source="122" target="111">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="148" value="Przechowuje harmonogram" style="endArrow=block;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=3;" edge="1" parent="1" source="119" target="111">
+                    <mxGeometry x="0.0857" y="8" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="149" value="Wysyła alert" style="endArrow=block;html=1;fillColor=#647687;strokeColor=#314354;strokeWidth=3;" edge="1" parent="1" source="124" target="112">
+                    <mxGeometry x="-0.5716" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="150" value="Otrzymuje powiadomienie" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="112">
+                    <mxGeometry x="0.3457" y="14" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="151" value="Otrzymuje powiadomienie" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="112">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="152" value="Generuje raport" style="endArrow=block;html=1;fillColor=#fa6800;strokeColor=#C73500;strokeWidth=3;" edge="1" parent="1" source="116" target="113">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" value="Generuje raport" style="endArrow=block;html=1;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="117" target="113">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" value="Analizuje dane" style="endArrow=block;html=1;fillColor=#ffff88;strokeColor=#36393d;strokeWidth=3;" edge="1" parent="1" source="126" target="113">
+                    <mxGeometry x="0.2827" y="3" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="155" value="Dostarcza historię" style="endArrow=block;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;strokeWidth=3;" edge="1" parent="1" source="119" target="113">
+                    <mxGeometry x="-0.191" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="156" value="Nadzoruje system i użytkowników" style="endArrow=block;html=1;strokeWidth=3;strokeColor=#BD7000;" edge="1" parent="1" source="118" target="105">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
