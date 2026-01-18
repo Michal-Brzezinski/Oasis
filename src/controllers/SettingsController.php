@@ -35,6 +35,10 @@ class SettingsController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/settings');
+            }
             $nickname = trim($_POST['nickname']);
             $email = trim($_POST['email']);
 
@@ -56,6 +60,11 @@ class SettingsController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/settings');
+            }
+
             $old = $_POST['old_password'];
             $new = $_POST['new_password'];
 
@@ -77,7 +86,10 @@ class SettingsController extends AppController
         }
 
         if ($this->isPost()) {
-            // TODO: zapisz ustawienia powiadomień
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/settings');
+            }
             $this->redirect('/dashboard/settings');
         }
     }
@@ -119,6 +131,11 @@ class SettingsController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/settings');
+            }
+
             // TODO: zapisz język
             $this->redirect('/dashboard/settings');
         }

@@ -1,6 +1,8 @@
 <h1>Edytuj czujnik</h1>
 
 <form method="POST" class="form-card">
+    <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
+
     <label>Nazwa:</label>
     <input type="text" name="name" value="<?= htmlspecialchars($sensor->getName()) ?>" required>
 

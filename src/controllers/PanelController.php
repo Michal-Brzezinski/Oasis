@@ -89,14 +89,11 @@ class PanelController extends AppController
             return $this->json(['error' => 'Sensor not found'], 404);
         }
 
-        // Na razie mock — później pobierzemy z MQTT/API
-        $mockData = [
-            'sensorId' => $sensorId,
-            'value' => rand(20, 80),
-            'unit' => 'percent',
-            'timestamp' => date('Y-m-d H:i:s')
-        ];
+        $readings = $this->sensorRepository->getLastReadings($sensorId, 50);
 
-        return $this->json($mockData);
+        return $this->json([
+            'sensorId' => $sensorId,
+            'readings' => $readings
+        ]);
     }
 }

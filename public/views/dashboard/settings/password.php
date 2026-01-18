@@ -1,6 +1,8 @@
 <h2>Zmiana hasła</h2>
 
 <form method="POST" class="form-card">
+    <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
+
     <label>Stare hasło:</label>
     <input type="password" name="old_password" required>
 

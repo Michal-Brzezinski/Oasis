@@ -17,9 +17,19 @@
         fetch('/dashboard/panel/getSensorData?id=<?= $sensor->getId() ?>')
             .then(r => r.json())
             .then(data => {
+
+                if (!data.readings || data.readings.length === 0) {
+                    document.getElementById('live-data').innerHTML = `
+                        <p>Brak danych pomiarowych.</p>
+                    `;
+                    return;
+                }
+
+                const last = data.readings[0];
+
                 document.getElementById('live-data').innerHTML = `
-                    <p>Wartość: ${data.value} ${data.unit}</p>
-                    <p>Czas: ${data.timestamp}</p>
+                    <p>Wartość: ${last.value} %</p>
+                    <p>Czas: ${last.created_at}</p>
                 `;
             });
     }

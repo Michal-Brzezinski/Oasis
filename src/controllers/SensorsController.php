@@ -53,6 +53,11 @@ class SensorsController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/sensors');
+            }
+
             $regionId = (int)$_POST['region_id'];
             $name = trim($_POST['name']);
             $type = trim($_POST['type']);
@@ -90,6 +95,11 @@ class SensorsController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/sensors');
+            }
+
             // Pobranie i oczyszczenie danych z formularza
             $name = trim($_POST['name']);
             $type = trim($_POST['type']);

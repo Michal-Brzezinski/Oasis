@@ -2,6 +2,7 @@
 
 require_once 'src/controllers/AppController.php';
 require_once 'src/repository/RegionRepository.php';
+require_once 'src/repository/NotificationRepository.php';
 
 class DashboardController extends AppController
 {
@@ -23,5 +24,18 @@ class DashboardController extends AppController
             'regions' => $regions,
             'pageTitle' => 'Dashboard'
         ]);
+    }
+
+    public function markNotificationsRead(): void
+    {
+        $this->requireLogin();
+
+        $userId = $this->getCurrentUserId();
+
+        $repo = new NotificationRepository();
+
+        $repo->markAllAsRead($userId);
+
+        echo json_encode(['success' => true]);
     }
 }

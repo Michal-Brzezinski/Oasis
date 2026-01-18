@@ -69,85 +69,122 @@ class SecurityController extends AppController
 
     public function register()
     {
-        // Dekorator, który definiuje, jakie metody HTTP są dostępne
+        // Dozwolone tylko GET i POST
         if (!$this->allowMethods(['GET', 'POST'])) {
             http_response_code(405);
             return $this->render('405', ['message' => 'Method not allowed']);
         }
 
+        // GET → wyświetlenie formularza
         if ($this->isGet()) {
-            return $this->render("register");
-        }
-
-        // Pobranie i sanityzacja danych z formularza
-        $email = trim($_POST["email"] ?? '');
-        $password1 = $_POST["password1"] ?? '';
-        $password2 = $_POST["password2"] ?? '';
-        $firstname = trim($_POST["firstname"] ?? '');
-        $lastname = trim($_POST["lastname"] ?? '');
-
-        // Walidacja pustych pól
-        if (empty($email) || empty($password1) || empty($password2) || empty($firstname) || empty($lastname)) {
-            return $this->render('register', ['message' => 'Wypełnij wszystkie pola']);
-        }
-
-        // Walidacja formatu email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return $this->render('register', ['message' => 'Nieprawidłowy format adresu email']);
-        }
-
-        // Walidacja długości imienia i nazwiska
-        if (strlen($firstname) < 2 || strlen($firstname) > 50) {
-            return $this->render('register', ['message' => 'Imię musi mieć od 2 do 50 znaków']);
-        }
-
-        if (strlen($lastname) < 2 || strlen($lastname) > 50) {
-            return $this->render('register', ['message' => 'Nazwisko musi mieć od 2 do 50 znaków']);
-        }
-
-        // Walidacja długości hasła
-        if (strlen($password1) < 8) {
-            return $this->render('register', ['message' => 'Hasło musi mieć minimum 8 znaków']);
-        }
-
-        // Sprawdzenie czy hasła są identyczne
-        if ($password1 !== $password2) {
-            return $this->render('register', ['message' => 'Hasła muszą być identyczne']);
-        }
-
-        // Sprawdzenie czy użytkownik z tym emailem już istnieje
-        if ($this->userRepository->getUserByEmail($email) !== false) {
-            return $this->render('register', ['message' => 'Ten adres email jest już w użyciu. Spróbuj się zalogować.']);
-        }
-
-        // Dodatkowa walidacja bezpieczeństwa hasła (opcjonalna)
-        if (!$this->isPasswordStrong($password1)) {
             return $this->render('register', [
-                'message' => 'Hasło jest zbyt słabe. Użyj kombinacji małych i dużych liter, cyfr oraz znaków specjalnych.'
+                'csrf_token' => $this->generateCsrfToken()
             ]);
         }
 
-        // Hashowanie hasła
-        $hashedPassword = password_hash($password1, PASSWORD_BCRYPT);
+        // POST → obsługa formularza
+        if ($this->isPost()) {
 
-        // Próba utworzenia użytkownika w bazie danych
-        try {
-            $this->userRepository->createUser(
-                $email,
-                $hashedPassword,
-                $firstname,
-                $lastname
-            );
+            // CSRF
+            if (!$this->validateCsrfToken()) {
+                return $this->render('register', [
+                    'message' => 'Nieprawidłowy token bezpieczeństwa',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
 
-            // Sukces - przekierowanie do strony logowania z komunikatem
-            return $this->render("login", [
-                "message" => "Konto zostało utworzone pomyślnie! Możesz się teraz zalogować."
-            ]);
-        } catch (Exception $e) {
-            return $this->render('register', [
-                'message' => $e->getMessage()
-            ]);
+            // Pobranie danych
+            $email = trim($_POST['email'] ?? '');
+            $password1 = $_POST['password1'] ?? '';
+            $password2 = $_POST['password2'] ?? '';
+            $firstname = trim($_POST['firstname'] ?? '');
+            $lastname = trim($_POST['lastname'] ?? '');
+
+            // Walidacja pustych pól
+            if (empty($email) || empty($password1) || empty($password2) || empty($firstname) || empty($lastname)) {
+                return $this->render('register', [
+                    'message' => 'Wypełnij wszystkie pola',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            // Walidacja email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return $this->render('register', [
+                    'message' => 'Nieprawidłowy format adresu email',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            // Walidacja imienia i nazwiska
+            if (strlen($firstname) < 2 || strlen($firstname) > 50) {
+                return $this->render('register', [
+                    'message' => 'Imię musi mieć od 2 do 50 znaków',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            if (strlen($lastname) < 2 || strlen($lastname) > 50) {
+                return $this->render('register', [
+                    'message' => 'Nazwisko musi mieć od 2 do 50 znaków',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            // Walidacja hasła
+            if (strlen($password1) < 8) {
+                return $this->render('register', [
+                    'message' => 'Hasło musi mieć minimum 8 znaków',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            if ($password1 !== $password2) {
+                return $this->render('register', [
+                    'message' => 'Hasła muszą być identyczne',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            if (!$this->isPasswordStrong($password1)) {
+                return $this->render('register', [
+                    'message' => 'Hasło jest zbyt słabe',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            // Sprawdzenie czy email już istnieje
+            if ($this->userRepository->getUserByEmail($email)) {
+                return $this->render('register', [
+                    'message' => 'Ten adres email jest już w użyciu',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
+
+            // Utworzenie użytkownika
+            $hashedPassword = password_hash($password1, PASSWORD_BCRYPT);
+
+            try {
+                $this->userRepository->createUser(
+                    $email,
+                    $hashedPassword,
+                    $firstname,
+                    $lastname
+                );
+
+                return $this->render('login', [
+                    'message' => 'Konto zostało utworzone pomyślnie! Możesz się teraz zalogować.'
+                ]);
+            } catch (Exception $e) {
+                return $this->render('register', [
+                    'message' => 'Błąd podczas tworzenia konta',
+                    'csrf_token' => $this->generateCsrfToken()
+                ]);
+            }
         }
+
+        // Fallback (teoretycznie nieosiągalny)
+        http_response_code(405);
     }
 
     /**

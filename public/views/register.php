@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Zarejestruj się w Oasis - zarządzaj swoim inteligentnym ogrodem">
     <title>Zarejestruj się do Oasis</title>
-    <link rel="icon" type="image/png" href="public/img/oasis_favicon.png">
-    <link rel="stylesheet" type="text/css" href="public/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="public/styles/auth.css">
+    <link rel="icon" type="image/png" href="/public/img/oasis_favicon.png">
+    <link rel="stylesheet" type="text/css" href="/public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="/public/styles/auth.css">
 </head>
 <body>
     <main class="login-container">
@@ -17,6 +17,9 @@
         
         <div class="form-wrapper">
             <form action="/register" method="POST" class="login-form-container">
+                <!-- CSRF token -->
+                <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
+
                 <div class="form-header">
                     <h1 class="form-title">
                         Dołącz do Oasis

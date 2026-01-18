@@ -1,6 +1,8 @@
 <h2>Dodaj czujnik</h2>
 
 <form method="POST" class="form-card">
+    <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
+
     <label>Nazwa:</label>
     <input type="text" name="name" required>
 

@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../repository/Repository.php';
 require_once __DIR__ . '/../models/Sensor.php';
+require_once __DIR__ . '/../models/SensorReading.php';
 
 class SensorRepository extends Repository
 {
@@ -81,5 +82,63 @@ class SensorRepository extends Repository
             $row['created_at'],
             $row['updated_at']
         );
+    }
+
+    public function getAllSensors(): array
+    {
+        $stmt = $this->database->prepare('SELECT * FROM sensors');
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sensors = [];
+        foreach ($rows as $row) {
+            $sensors[] = $this->mapToSensor($row);
+        }
+        return $sensors;
+    }
+    public function addReading(int $sensorId, float $value): void
+    {
+        $stmt = $this->database->prepare(' INSERT INTO sensor_readings (sensor_id, value) VALUES (:sensor_id, :value) ');
+        $stmt->execute([':sensor_id' => $sensorId, ':value' => $value]);
+    }
+    public function getLastReading(int $sensorId): ?SensorReading
+    {
+        $stmt = $this->database->prepare(' SELECT * FROM sensor_readings WHERE sensor_id = :sensor_id ORDER BY created_at DESC LIMIT 1 ');
+        $stmt->bindValue(':sensor_id', $sensorId, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        return new SensorReading((int)$row['id'], (int)$row['sensor_id'], (float)$row['value'], $row['created_at']);
+    }
+
+    public function getLastReadings(int $sensorId, int $limit = 50): array
+    {
+        $stmt = $this->database->prepare('
+        SELECT value, created_at
+        FROM sensor_readings
+        WHERE sensor_id = :id
+        ORDER BY created_at DESC
+        LIMIT :limit
+    ');
+        $stmt->bindValue(':id', $sensorId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getLastReadingsForAllSensors(int $limit = 50): array
+    {
+        $stmt = $this->database->prepare('
+        SELECT sensor_id, value, created_at
+        FROM sensor_readings
+        ORDER BY created_at DESC
+        LIMIT :limit
+    ');
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

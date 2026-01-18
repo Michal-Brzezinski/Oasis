@@ -53,6 +53,12 @@ class CamerasController extends AppController
         }
 
         if ($this->isPost()) {
+
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/cameras');
+            }
+
             $regionId = (int)$_POST['region_id'];
             $name = trim($_POST['name']);
             $streamUrl = trim($_POST['stream_url']);
@@ -88,6 +94,11 @@ class CamerasController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/cameras');
+            }
+
             $name = trim($_POST['name']);
             $streamUrl = trim($_POST['stream_url']);
             $active = isset($_POST['is_active']);

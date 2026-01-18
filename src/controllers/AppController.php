@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../repository/NotificationRepository.php';
 
 class AppController
 {
@@ -90,5 +91,71 @@ class AppController
             session_start();
         }
         return isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+    }
+
+    protected function addFlash(string $type, string $message): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION['flash'][] = [
+            'type' => $type,
+            'message' => $message
+        ];
+    }
+
+    protected function getFlashes(): array
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $flashes = $_SESSION['flash'] ?? [];
+        unset($_SESSION['flash']);
+        return $flashes;
+    }
+
+    protected function generateCsrfToken(): string
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $token = bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $token;
+
+        return $token;
+    }
+
+    protected function validateCsrfToken(): bool
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_POST['csrf_token'], $_SESSION['csrf_token'])) {
+            return false;
+        }
+
+        $valid = hash_equals($_SESSION['csrf_token'], $_POST['csrf_token']);
+
+        unset($_SESSION['csrf_token']); // token jednorazowy
+
+        return $valid;
+    }
+
+    protected function getCurrentUserNotifications(): array
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (empty($_SESSION['user_id'])) {
+            return [];
+        }
+
+        $notificationRepository = new NotificationRepository();
+        return $notificationRepository->getUnreadByUser((int)$_SESSION['user_id']);
     }
 }

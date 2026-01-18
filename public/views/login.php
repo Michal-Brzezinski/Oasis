@@ -17,6 +17,7 @@
         
         <div class="form-wrapper">
             <form action="/login" method="POST" class="login-form-container">
+                <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
                 <div class="form-header">
                     <h1 class="form-title">
                         Witaj w Oasis

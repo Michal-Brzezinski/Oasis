@@ -53,6 +53,11 @@ class SchedulesController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/schedules');
+            }
+
             $regionId = (int)$_POST['region_id'];
             $name = trim($_POST['name']);
             $cron = trim($_POST['cron_expression']);
@@ -89,6 +94,11 @@ class SchedulesController extends AppController
         }
 
         if ($this->isPost()) {
+            if (!$this->validateCsrfToken()) {
+                $this->addFlash('error', 'Nieprawidłowy token bezpieczeństwa.');
+                $this->redirect('/dashboard/schedules');
+            }
+
             $name = trim($_POST['name']);
             $cron = trim($_POST['cron_expression']);
             $liters = (float)$_POST['volume_liters'];

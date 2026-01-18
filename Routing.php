@@ -7,6 +7,8 @@ require_once 'src/controllers/CamerasController.php';
 require_once 'src/controllers/WateringController.php';
 require_once 'src/controllers/SensorsController.php';
 require_once 'src/controllers/SettingsController.php';
+require_once 'src/controllers/RegionsController.php';
+require_once 'src/controllers/SimulationController.php';
 
 
 class Routing
@@ -35,6 +37,10 @@ class Routing
             'dashboard' => [
                 'controller' => 'DashboardController',
                 'action' => 'index'
+            ],
+            'dashboard/notifications/read' => [
+                'controller' => 'DashboardController',
+                'action' => 'markNotificationsRead'
             ],
 
             // ===== PANEL (STRONA GŁÓWNA) =====
@@ -90,10 +96,6 @@ class Routing
                 'controller' => 'CamerasController',
                 'action' => 'view'
             ],
-            'dashboard/cameras/manage' => [
-                'controller' => 'CamerasController',
-                'action' => 'manage'
-            ],
             'dashboard/cameras/add' => [
                 'controller' => 'CamerasController',
                 'action' => 'add'
@@ -105,18 +107,6 @@ class Routing
             'dashboard/cameras/delete' => [
                 'controller' => 'CamerasController',
                 'action' => 'delete'
-            ],
-            'dashboard/cameras/snapshot' => [
-                'controller' => 'CamerasController',
-                'action' => 'snapshot'
-            ],
-            'dashboard/cameras/control' => [
-                'controller' => 'CamerasController',
-                'action' => 'control'
-            ],
-            'dashboard/cameras/stream' => [
-                'controller' => 'CamerasController',
-                'action' => 'stream'
             ],
 
             // ===== USTAWIENIA =====
@@ -181,6 +171,28 @@ class Routing
             'dashboard/sensors/delete' => [
                 'controller' => 'SensorsController',
                 'action' => 'delete'
+            ],
+            // ===== REGIONY =====
+            'dashboard/regions' => [
+                'controller' => 'RegionsController',
+                'action' => 'index'
+            ],
+            'dashboard/regions/add' => [
+                'controller' => 'RegionsController',
+                'action' => 'add'
+            ],
+            'dashboard/regions/edit' => [
+                'controller' => 'RegionsController',
+                'action' => 'edit'
+            ],
+            'dashboard/regions/delete' => [
+                'controller' => 'RegionsController',
+                'action' => 'delete'
+            ],
+            // ===== SYMULACJA =====
+            'api/simulate' => [
+                'controller' => 'SimulationController',
+                'action' => 'run'
             ],
 
         ];
