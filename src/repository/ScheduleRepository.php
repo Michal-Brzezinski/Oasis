@@ -29,12 +29,13 @@ class ScheduleRepository extends Repository
         return $row ? $this->mapToSchedule($row) : null;
     }
 
+
     public function createSchedule(int $regionId, string $name, string $cron, float $liters): void
     {
         $stmt = $this->database->prepare('
-            INSERT INTO schedules (region_id, name, cron_expression, volume_liters)
-            VALUES (:region_id, :name, :cron, :liters)
-        ');
+        INSERT INTO schedules (region_id, name, cron_expression, volume_liters, is_enabled, next_run)
+        VALUES (:region_id, :name, :cron, :liters, TRUE, NOW())
+    ');
 
         $stmt->execute([
             ':region_id' => $regionId,
@@ -43,6 +44,7 @@ class ScheduleRepository extends Repository
             ':liters' => $liters
         ]);
     }
+
 
     public function updateSchedule(int $id, string $name, string $cron, float $liters, bool $enabled): void
     {
@@ -84,7 +86,36 @@ class ScheduleRepository extends Repository
             (float)$row['volume_liters'],
             (bool)$row['is_enabled'],
             $row['created_at'],
+            $row['next_run'],
             $row['updated_at']
         );
+    }
+
+    public function getDueSchedules(): array
+    {
+        $stmt = $this->database->prepare("
+        SELECT * FROM schedules
+        WHERE next_run <= NOW()
+        ");
+        $stmt->execute();
+
+        return array_map(fn($r) => $this->mapToSchedule($r), $stmt->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    public function updateNextRun(int $scheduleId, string $cron): void
+    {
+        $cronService = new CronService();
+        $next = $cronService->getNextRun($cron, new DateTime());
+
+        $stmt = $this->database->prepare('
+        UPDATE schedules
+        SET next_run = :next_run
+        WHERE id = :id
+    ');
+
+        $stmt->execute([
+            ':next_run' => $next->format('Y-m-d H:i:s'),
+            ':id' => $scheduleId
+        ]);
     }
 }

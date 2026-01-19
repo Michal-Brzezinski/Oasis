@@ -73,9 +73,30 @@ class CamerasRepository extends Repository
             (int)$row['region_id'],
             $row['name'],
             $row['stream_url'],
+            $row['snapshot_url'],
             (bool)$row['is_active'],
             $row['created_at'],
             $row['updated_at']
         );
+    }
+
+    public function updateSnapshot(int $id, string $url): void
+    {
+        $stmt = $this->database->prepare("
+        UPDATE cameras SET snapshot_url = :url WHERE id = :id
+    ");
+        $stmt->execute([
+            ':url' => $url,
+            ':id' => $id
+        ]);
+    }
+
+    public function getAllCameras(): array
+    {
+        $stmt = $this->database->prepare('SELECT * FROM cameras');
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(fn($r) => $this->mapToCamera($r), $rows);
     }
 }

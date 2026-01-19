@@ -1,15 +1,17 @@
 <?php
 
-/** @var Region[] $regions */ ?>
-<?php /** @var WateringAction[] $actions */ ?>
+/** @var Region[] $regions */
+/** @var WateringAction[] $actions */
+?>
 
 <div class="module-header">
     <h2>Podlewanie</h2>
 
     <?php if ($selectedRegionId !== null): ?>
-        <a class="btn-primary" href="/dashboard/watering/start?region=<?= $selectedRegionId ?>">
-            Podlej teraz
-        </a>
+        <form method="POST" action="/dashboard/watering/start" style="display:inline;">
+            <input type="hidden" name="region" value="<?= $selectedRegionId ?>">
+            <button class="btn-primary">Podlej teraz</button>
+        </form>
     <?php endif; ?>
 </div>
 
@@ -33,16 +35,24 @@
             <p><strong>Start:</strong> <?= $action->getStartedAt() ?></p>
             <p><strong>Koniec:</strong> <?= $action->getStoppedAt() ?? '—' ?></p>
             <p><strong>Status:</strong> <?= htmlspecialchars($action->getStatus()) ?></p>
-            <p><strong>Ilość wody:</strong> <?= $action->getVolumeLiters() ? $action->getVolumeLiters() . ' L' : '—' ?></p>
+            <p><strong>Ilość wody:</strong>
+                <?= $action->getVolumeLiters() !== null ? $action->getVolumeLiters() . ' L' : '—' ?>
+            </p>
 
-            <?php if ($action->getStatus() === 'RUNNING'): ?>
-                <div class="card-actions">
+            <div class="card-actions">
+                <?php if ($action->getStatus() === 'RUNNING'): ?>
                     <a class="btn-danger"
-                        href="/dashboard/watering/fail?id=<?= $action->getId() ?>">
+                        href="/dashboard/watering/stop?id=<?= $action->getId() ?>">
                         Zatrzymaj
                     </a>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+
+                <a class="btn-danger"
+                    onclick="return confirm('Usunąć tę akcję?')"
+                    href="/dashboard/watering/delete?id=<?= $action->getId() ?>">
+                    Usuń
+                </a>
+            </div>
         </div>
     <?php endforeach; ?>
 </div>

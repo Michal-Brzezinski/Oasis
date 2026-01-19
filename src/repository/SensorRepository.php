@@ -141,4 +141,20 @@ class SensorRepository extends Repository
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function increaseMoistureForRegion(int $regionId, float $amount): void
+    {
+        $stmt = $this->database->prepare("
+        SELECT id FROM sensors WHERE region_id = :region
+    ");
+        $stmt->execute([':region' => $regionId]);
+
+        $sensors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($sensors as $s) {
+            $last = $this->getLastReading($s['id']);
+            $newValue = min(100, ($last ? $last->getValue() : 50) + $amount);
+            $this->addReading($s['id'], $newValue);
+        }
+    }
 }

@@ -10,6 +10,7 @@ class Schedule
         private float $volumeLiters,
         private bool $isEnabled,
         private string $createdAt,
+        private ?string $nextRun,
         private ?string $updatedAt
     ) {}
 
@@ -44,5 +45,9 @@ class Schedule
     public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
+    }
+    public function getNextRun(): ?string
+    {
+        return $this->nextRun;
     }
 }

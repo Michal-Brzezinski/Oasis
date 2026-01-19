@@ -13,8 +13,7 @@ class WateringRepository extends Repository
         $stmt->bindValue(':rid', $regionId, PDO::PARAM_INT);
         $stmt->execute();
 
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map(fn($r) => $this->mapToAction($r), $rows);
+        return array_map(fn($r) => $this->mapToAction($r), $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getActionById(int $id): ?WateringAction
@@ -46,8 +45,35 @@ class WateringRepository extends Repository
         return (int)$stmt->fetchColumn();
     }
 
+
     public function completeAction(int $id, float $liters): void
     {
+        $stmt = $this->database->prepare('
+            UPDATE watering_actions
+            SET status = \'COMPLETED\',
+                stopped_at = NOW(),
+                volume_liters = :liters
+            WHERE id = :id
+        ');
+
+        $stmt->execute([
+            ':liters' => $liters,
+            ':id' => $id
+        ]);
+    }
+
+
+    public function completeActionAuto(int $id, float $flowLitersPerSecond = 1.0): void
+    {
+        $action = $this->getActionById($id);
+        if (!$action) return;
+
+        $start = new DateTime($action->getStartedAt());
+        $now = new DateTime();
+
+        $seconds = max(1, $now->getTimestamp() - $start->getTimestamp());
+        $liters = $seconds * $flowLitersPerSecond;
+
         $stmt = $this->database->prepare('
             UPDATE watering_actions
             SET status = \'COMPLETED\',
@@ -70,7 +96,12 @@ class WateringRepository extends Repository
                 stopped_at = NOW()
             WHERE id = :id
         ');
+        $stmt->execute([':id' => $id]);
+    }
 
+    public function deleteAction(int $id): void
+    {
+        $stmt = $this->database->prepare('DELETE FROM watering_actions WHERE id = :id');
         $stmt->execute([':id' => $id]);
     }
 

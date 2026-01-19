@@ -3,16 +3,19 @@
 require_once 'src/controllers/AppController.php';
 require_once 'src/repository/WateringRepository.php';
 require_once 'src/repository/RegionRepository.php';
+require_once 'src/repository/SensorRepository.php';
 
 class WateringController extends AppController
 {
     private WateringRepository $wateringRepository;
     private RegionRepository $regionRepository;
+    private SensorRepository $sensorRepository;
 
     public function __construct()
     {
         $this->wateringRepository = new WateringRepository();
         $this->regionRepository = new RegionRepository();
+        $this->sensorRepository = new SensorRepository();
     }
 
     public function index(): void
@@ -22,15 +25,9 @@ class WateringController extends AppController
         $userId = $this->getCurrentUserId();
         $regions = $this->regionRepository->getRegionsByOwner($userId);
 
-        $selectedRegionId = null;
+        $selectedRegionId = $_GET['region'] ?? ($regions[0]->getId() ?? null);
 
-        if (isset($_GET['region'])) {
-            $selectedRegionId = (int) $_GET['region'];
-        } elseif (!empty($regions)) {
-            $selectedRegionId = $regions[0]->getId();
-        }
-
-        $actions = $selectedRegionId !== null
+        $actions = $selectedRegionId
             ? $this->wateringRepository->getActionsByRegion($selectedRegionId)
             : [];
 
@@ -45,40 +42,72 @@ class WateringController extends AppController
     {
         $this->requireLogin();
 
-        if (!isset($_GET['region'])) {
-            http_response_code(400);
-            echo "Missing region ID";
+        if (!isset($_POST['region'])) {
+            $this->addFlash('error', 'Brak regionu.');
+            $this->redirect('/dashboard/watering');
             return;
         }
 
-        $regionId = (int)$_GET['region'];
+        $regionId = (int)$_POST['region'];
         $userId = $this->getCurrentUserId();
 
-        // Start action
-        $actionId = $this->wateringRepository->startAction($regionId, null, $userId);
+        $region = $this->regionRepository->getRegionById($regionId);
+        if (!$region || $region->getOwnerId() !== $userId) {
+            $this->addFlash('error', 'Nieprawidłowy region.');
+            $this->redirect('/dashboard/watering');
+            return;
+        }
 
-        // MOCK watering
-        sleep(2);
+        $this->wateringRepository->startAction($regionId, null, $userId);
 
-        // Complete action with mock liters
-        $this->wateringRepository->completeAction($actionId, rand(5, 15));
-
+        $this->addFlash('success', 'Podlewanie zostało uruchomione.');
         $this->redirect('/dashboard/watering?region=' . $regionId);
     }
 
-    public function fail(): void
+    public function stop(): void
     {
         $this->requireLogin();
 
         if (!isset($_GET['id'])) {
-            http_response_code(400);
-            echo "Missing action ID";
+            $this->addFlash('error', 'Brak ID akcji.');
+            $this->redirect('/dashboard/watering');
             return;
         }
 
-        $actionId = (int)$_GET['id'];
-        $this->wateringRepository->failAction($actionId);
+        $id = (int)$_GET['id'];
 
+        $action = $this->wateringRepository->getActionById($id);
+        if (!$action) {
+            $this->addFlash('error', 'Akcja nie istnieje.');
+            $this->redirect('/dashboard/watering');
+            return;
+        }
+
+        $regionId = $action->getRegionId();
+
+        $this->wateringRepository->completeActionAuto($id);
+
+        $this->sensorRepository->increaseMoistureForRegion($regionId, rand(5, 15));
+
+        $this->addFlash('success', 'Podlewanie zostało zatrzymane.');
+        $this->redirect('/dashboard/watering?region=' . $regionId);
+    }
+
+    public function delete(): void
+    {
+        $this->requireLogin();
+
+        if (!isset($_GET['id'])) {
+            $this->addFlash('error', 'Brak ID akcji.');
+            $this->redirect('/dashboard/watering');
+            return;
+        }
+
+        $id = (int)$_GET['id'];
+
+        $this->wateringRepository->deleteAction($id);
+
+        $this->addFlash('success', 'Akcja została usunięta.');
         $this->redirect('/dashboard/watering');
     }
 }

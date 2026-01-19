@@ -7,6 +7,7 @@ class Camera
         private int $regionId,
         private string $name,
         private string $streamUrl,
+        private ?string $snapshotUrl,
         private bool $isActive,
         private string $createdAt,
         private ?string $updatedAt
@@ -39,5 +40,9 @@ class Camera
     public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
+    }
+    public function getSnapshotUrl(): ?string
+    {
+        return $this->snapshotUrl;
     }
 }

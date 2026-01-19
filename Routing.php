@@ -151,9 +151,17 @@ class Routing
                 'controller' => 'WateringController',
                 'action' => 'start'
             ],
+            'dashboard/watering/stop' => [
+                'controller' => 'WateringController',
+                'action' => 'stop'
+            ],
             'dashboard/watering/fail' => [
                 'controller' => 'WateringController',
                 'action' => 'fail'
+            ],
+            'dashboard/watering/delete' => [
+                'controller' => 'WateringController',
+                'action' => 'delete'
             ],
             // ===== CZUJNIKI =====
             'dashboard/sensors' => [
