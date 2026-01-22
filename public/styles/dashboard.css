@@ -167,10 +167,10 @@ body {
 .filter-bar select {
     padding: 8px 12px;
     font-size: 15px;
-    border: 1px solid var(--navy);
+    border: 2px solid var(--color-secondary);
     border-radius: 6px;
-    background-color: #99faff;
-    color: var(--green);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--color-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
     outline: none;
@@ -179,33 +179,16 @@ body {
 
 /* efekt hover */
 .filter-bar select:hover {
-    border-color: var(--bg-navy);
-    background-color: #90eeff;
+    border-color: var(--color-secondary);
+    border-radius: 12px;
+    background-color: #caffe0;
 }
 
 /* efekt focus */
 .filter-bar select:focus {
-    border-color: #4a90e2;
+    border-color: #3cbc72;
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
-    background-color: #90eeff;
-}
-
-/* Podstawowy wygląd opcji */
-.filter-bar select option {
-    padding: 8px 12px;
-    background-color: #90eeff;
-    color: #333;
-}
-
-/* Hover w niektórych przeglądarkach */
-.filter-bar select option:hover {
-    background-color: #6de3f8;
-}
-
-/* Styl zaznaczonej opcji */
-.filter-bar select option:checked {
-    background-color: #5e9ffa;
-    font-weight: 600;
+    background-color: #caffe0;
 }
 
 /* CARD GRID */
