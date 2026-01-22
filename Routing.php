@@ -32,6 +32,11 @@ class Routing
                 'controller' => 'SecurityController',
                 'action' => 'logout'
             ],
+            'privacy-policy' => [
+                'controller' => 'SecurityController',
+                'action' => 'privacy'
+            ],
+
 
             // ===== DASHBOARD - GŁÓWNY =====
             'dashboard' => [

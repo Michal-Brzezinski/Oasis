@@ -21,10 +21,14 @@
         <p>Ustaw parametry czujników</p>
     </a>
 
-    <a class="card card-link" href="/dashboard/settings/toggleDevice">
+    <a class="card card-link"
+        href="https://www.seeedstudio.com/Sensors-c-2455.html"
+        target="_blank"
+        rel="noopener noreferrer">
         <h3>Urządzenia</h3>
-        <p>Włącz/wyłącz urządzenia</p>
+        <p>Proponowana strona do zakupu sprzętu</p>
     </a>
+
 
     <a class="card card-link" href="/dashboard/settings/change-language">
         <h3>Język</h3>

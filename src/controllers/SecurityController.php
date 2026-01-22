@@ -187,6 +187,12 @@ class SecurityController extends AppController
         http_response_code(405);
     }
 
+    public function privacy()
+    {
+        return $this->render('privacy_policy');
+    }
+
+
     /**
      * Sprawdza siłę hasła
      * Wymaga: minimum 8 znaków, małe i duże litery, cyfry, znaki specjalne

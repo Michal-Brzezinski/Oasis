@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,13 @@
     <link rel="stylesheet" type="text/css" href="public/styles/main.css">
     <link rel="stylesheet" type="text/css" href="public/styles/auth.css">
 </head>
+
 <body>
     <main class="login-container">
         <div class="image" role="img" aria-label="Obraz przedstawiający ogród"></div>
         <div class="separator separator--white"></div>
         <div class="separator separator--blue"></div>
-        
+
         <div class="form-wrapper">
             <form action="/login" method="POST" class="login-form-container">
                 <input type="hidden" name="csrf_token" value="<?= $this->generateCsrfToken() ?>">
@@ -26,39 +28,39 @@
                     <p class="form-subtitle">Zaloguj się, aby zarządzać swoim inteligentnym ogrodem</p>
                 </div>
 
-                <?php if(isset($message)): ?>
+                <?php if (isset($message)): ?>
                     <div class="message" role="alert" aria-live="polite">
                         <?= htmlspecialchars($message); ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <div class="form-fields">
                     <div class="field">
                         <label for="email">Adres email</label>
-                        <input 
-                            id="email" 
-                            name="email" 
-                            type="email" 
-                            placeholder="Wprowadź swój adres email" 
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Wprowadź swój adres email"
                             autocomplete="email"
                             required
                             aria-required="true">
                     </div>
-                    
+
                     <div class="field">
                         <label for="password">Hasło</label>
                         <div class="password-wrapper">
-                            <input 
-                                id="password" 
-                                name="password" 
-                                type="password" 
-                                placeholder="Wprowadź swoje hasło" 
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                placeholder="Wprowadź swoje hasło"
                                 autocomplete="current-password"
                                 required
                                 aria-required="true">
-                            <button 
-                                type="button" 
-                                class="password-toggle" 
+                            <button
+                                type="button"
+                                class="password-toggle"
                                 aria-label="Pokaż hasło"
                                 onclick="togglePassword('password')">
                                 <svg class="eye-icon eye-icon--closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -75,18 +77,18 @@
                 </div>
 
                 <button type="submit" class="btn btn--primary">Zaloguj się</button>
-                
+
                 <div class="separator-line">
                     <span>lub</span>
                 </div>
-                
-                <button type="button" class="btn btn--google">
-                    <img src="/public/img/google-logo.png" alt="" width="20" height="20">
-                    Zaloguj się przez Google
-                </button>
+
+                <a href="/register" class="btn btn--google">
+                    <img src="/public/img/oasis-logo.png" alt="" width="20" height="20">
+                    Utwórz nowe konto
+                </a>
 
                 <div class="form-footer">
-                    <a href="/register" class="register-link">Zarejestruj się</a>
+                    <a href="/privacy-policy" class="register-link">Polityka prywatności</a>
                 </div>
             </form>
         </div>
@@ -94,4 +96,5 @@
 
     <script src="/public/scripts/togglePassword.js"></script>
 </body>
+
 </html>
