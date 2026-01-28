@@ -11,5 +11,5 @@
     <label>Aktywna:</label>
     <input type="checkbox" name="is_active" <?= $camera->isActive() ? 'checked' : '' ?>>
 
-    <button class="btn-primary" type="submit">Zapisz</button>
+    <button class="btn btn-primary" type="submit">Zapisz</button>
 </form>

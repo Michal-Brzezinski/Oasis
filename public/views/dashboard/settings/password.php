@@ -9,5 +9,5 @@
     <label>Nowe hasło:</label>
     <input type="password" name="new_password" required>
 
-    <button class="btn-primary" type="submit">Zmień hasło</button>
+    <button class="btn btn-primary" type="submit">Zmień hasło</button>
 </form>

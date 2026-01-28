@@ -5,7 +5,7 @@
 
 <div class="module-header">
     <h2>Czujniki</h2>
-    <a class="btn-primary" href="/dashboard/sensors/add">Dodaj czujnik</a>
+    <a class="btn btn-primary" href="/dashboard/sensors/add">Dodaj czujnik</a>
 </div>
 
 <div class="filter-bar">
@@ -28,8 +28,8 @@
             <p>Status: <?= $sensor->isActive() ? 'Aktywny' : 'Nieaktywny' ?></p>
 
             <div class="card-actions">
-                <a class="btn-secondary" href="/dashboard/sensors/edit?id=<?= $sensor->getId() ?>">Edytuj</a>
-                <a class="btn-danger"
+                <a class="btn btn-secondary" href="/dashboard/sensors/edit?id=<?= $sensor->getId() ?>">Edytuj</a>
+                <a class="btn btn-danger"
                     onclick="return confirm('Usunąć czujnik?')"
                     href="/dashboard/sensors/delete?id=<?= $sensor->getId() ?>">Usuń</a>
             </div>

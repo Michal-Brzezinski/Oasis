@@ -5,5 +5,5 @@
     <label>Nazwa regionu:</label>
     <input type="text" name="name" value="<?= htmlspecialchars($region->getName()) ?>" required>
 
-    <button class="btn-primary" type="submit">Zapisz</button>
+    <button class="btn btn-primary" type="submit">Zapisz</button>
 </form>

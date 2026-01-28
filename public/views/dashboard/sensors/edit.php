@@ -12,5 +12,5 @@
     <label>Aktywny:</label>
     <input type="checkbox" name="is_active" <?= $sensor->isActive() ? 'checked' : '' ?>>
 
-    <button type="submit" class="btn-primary">Zapisz</button>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
 </form>

@@ -24,5 +24,5 @@
         </label>
     </div>
 
-    <button class="btn-primary" type="submit">Zapisz</button>
+    <button class="btn btn-primary" type="submit">Zapisz</button>
 </form>

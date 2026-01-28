@@ -10,7 +10,7 @@
     <?php if ($selectedRegionId !== null): ?>
         <form method="POST" action="/dashboard/watering/start" style="display:inline;">
             <input type="hidden" name="region" value="<?= $selectedRegionId ?>">
-            <button class="btn-primary">Podlej teraz</button>
+            <button class="btn btn-primary">Podlej teraz</button>
         </form>
     <?php endif; ?>
 </div>
@@ -41,13 +41,13 @@
 
             <div class="card-actions">
                 <?php if ($action->getStatus() === 'RUNNING'): ?>
-                    <a class="btn-danger"
+                    <a class="btn btn-danger"
                         href="/dashboard/watering/stop?id=<?= $action->getId() ?>">
                         Zatrzymaj
                     </a>
                 <?php endif; ?>
 
-                <a class="btn-danger"
+                <a class="btn btn-danger"
                     onclick="return confirm('Usunąć tę akcję?')"
                     href="/dashboard/watering/delete?id=<?= $action->getId() ?>">
                     Usuń

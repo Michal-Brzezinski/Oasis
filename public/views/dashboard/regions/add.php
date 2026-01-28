@@ -5,5 +5,5 @@
     <label>Nazwa regionu:</label>
     <input type="text" name="name" required>
 
-    <button class="btn-primary" type="submit">Dodaj</button>
+    <button class="btn btn-primary" type="submit">Dodaj</button>
 </form>

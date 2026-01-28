@@ -1,4 +1,12 @@
 
+body{
+    background-image: url("/public/img/login_img.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
 .privacy-container {
     max-width: 900px;
     margin: 40px auto;
@@ -35,4 +43,57 @@ ul {
 }
 .back-link:hover {
     background: #086086;
+}
+
+@media (max-width: 767px) {
+    .privacy-container {
+        margin: 20px 16px;
+        padding: 24px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-top: 24px;
+    }
+
+    p, ul {
+        font-size: 0.95rem;
+    }
+
+    ul {
+        margin-left: 16px;
+    }
+
+    .back-link {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .privacy-container {
+        margin: 30px 24px;
+        padding: 32px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .privacy-container {
+        max-width: 1000px;
+    }
 }

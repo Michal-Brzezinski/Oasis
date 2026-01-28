@@ -9,5 +9,5 @@
     <label>Email:</label>
     <input type="email" name="email" value="<?= htmlspecialchars($user->getEmail()) ?>" required>
 
-    <button class="btn-primary" type="submit">Zapisz zmiany</button>
+    <button class="btn btn-primary" type="submit">Zapisz zmiany</button>
 </form>

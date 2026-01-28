@@ -119,6 +119,7 @@ body {
   box-shadow: var(--shadow-form);
   width: 100%;
   max-width: 500px;
+  border-radius: var(--radius-md);
   padding: var(--spacing-xl) var(--spacing-md);
   display: flex;
   flex-direction: column;
@@ -487,6 +488,7 @@ input:invalid:not(:placeholder-shown) {
   .form-wrapper {
     width: 50%;
     padding: var(--spacing-md);
+    background-color: var(--color-primary-dark);
   }
 
   .login-form-container {
@@ -494,6 +496,22 @@ input:invalid:not(:placeholder-shown) {
     padding: var(--spacing-xl);
   }
 }
+
+@media screen and (max-width: 1023px) {
+  .form-wrapper {
+    background-image:
+      linear-gradient(
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6)
+      ),
+      url("/public/img/login_img.webp");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 
 /* ====================================
    Responsive Design - Large Desktop

@@ -18,5 +18,5 @@
         <?php endforeach; ?>
     </select>
 
-    <button type="submit" class="btn-primary">Dodaj</button>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
 </form>

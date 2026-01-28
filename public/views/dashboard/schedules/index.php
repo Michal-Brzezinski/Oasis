@@ -5,7 +5,7 @@
 
 <div class="module-header">
     <h2>Harmonogramy podlewania</h2>
-    <a class="btn-primary" href="/dashboard/schedules/add">Dodaj harmonogram</a>
+    <a class="btn btn-primary" href="/dashboard/schedules/add">Dodaj harmonogram</a>
 </div>
 
 <div class="filter-bar">
@@ -30,8 +30,8 @@
             <p><strong>Status:</strong> <?= $schedule->isEnabled() ? 'Aktywny' : 'Wyłączony' ?></p>
 
             <div class="card-actions">
-                <a class="btn-secondary" href="/dashboard/schedules/edit?id=<?= $schedule->getId() ?>">Edytuj</a>
-                <a class="btn-danger"
+                <a class="btn btn-secondary" href="/dashboard/schedules/edit?id=<?= $schedule->getId() ?>">Edytuj</a>
+                <a class="btn btn-danger"
                     onclick="return confirm('Usunąć harmonogram?')"
                     href="/dashboard/schedules/delete?id=<?= $schedule->getId() ?>">Usuń</a>
             </div>

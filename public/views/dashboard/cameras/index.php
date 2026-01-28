@@ -5,7 +5,7 @@
 
 <div class="module-header">
     <h2>Kamery</h2>
-    <a class="btn-primary" href="/dashboard/cameras/add">Dodaj kamerę</a>
+    <a class="btn btn-primary" href="/dashboard/cameras/add">Dodaj kamerę</a>
 </div>
 
 <div class="filter-bar">
@@ -28,9 +28,9 @@
             <p><strong>Status:</strong> <?= $camera->isActive() ? 'Aktywna' : 'Nieaktywna' ?></p>
 
             <div class="card-actions">
-                <a class="btn-secondary" href="/dashboard/cameras/view?id=<?= $camera->getId() ?>">Podgląd</a>
-                <a class="btn-secondary" href="/dashboard/cameras/edit?id=<?= $camera->getId() ?>">Edytuj</a>
-                <a class="btn-danger"
+                <a class="btn btn-secondary" href="/dashboard/cameras/view?id=<?= $camera->getId() ?>">Podgląd</a>
+                <a class="btn btn-secondary" href="/dashboard/cameras/edit?id=<?= $camera->getId() ?>">Edytuj</a>
+                <a class="btn btn-danger"
                     onclick="return confirm('Usunąć kamerę?')"
                     href="/dashboard/cameras/delete?id=<?= $camera->getId() ?>">Usuń</a>
             </div>

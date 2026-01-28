@@ -14,5 +14,5 @@
 
     <label>Aktywny:</label>
     <input type="checkbox" name="is_enabled" <?= $schedule->isEnabled() ? 'checked' : '' ?>>
-    <button type="submit" class="btn-primary">Zapisz</button>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
 </form>
