@@ -46,6 +46,11 @@
                 <a href="/dashboard/settings">
                     <span>Ustawienia</span>
                 </a>
+
+                <?php if (($_SESSION['user_role'] ?? '') === 'ADMIN'): ?>
+                    <a href="/dashboard/admin/users"><span>Użytkownicy</span></a>
+                <?php endif; ?>
+
                 <a href="/logout" class="logout">
                     <span>Wyloguj</span>
                 </a>
@@ -155,10 +160,11 @@
 
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts - Order matters! -->
     <script src="/public/scripts/toggle.js"></script>
-    <script src="/public/scripts/notificationScroll.js"></script>
-    <script src="/public/scripts/hamburgerMenu.js"></script>
+    <script src="/public/scripts/mobileMenu.js"></script>
+    <script src="/public/scripts/notifications.js"></script>
+    <script src="/public/scripts/flashMessages.js"></script>
 
 </body>
 

@@ -115,6 +115,13 @@ class UserRepository extends Repository
         return true;
     }
 
+    public function deleteUser(int $id): void
+    {
+        $stmt = $this->database->prepare('DELETE FROM users WHERE id = :id');
+        $stmt->execute([':id' => $id]);
+    }
+
+
     private function mapToUser(array $row): User
     {
         return new User(

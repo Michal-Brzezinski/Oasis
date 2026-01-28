@@ -61,8 +61,14 @@ class SecurityController extends AppController
         $_SESSION['user_email'] = $user->getEmail();
         $_SESSION['user_role'] = $user->getRole();
 
-        // Przekierowanie do dashboardu
+        // Przekierowanie zależne od roli
         $url = "http://$_SERVER[HTTP_HOST]";
+
+        if ($user->getRole() === 'ADMIN') {
+            header("Location: {$url}/dashboard/admin");
+            exit();
+        }
+
         header("Location: {$url}/dashboard");
         exit();
     }

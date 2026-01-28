@@ -207,7 +207,19 @@ class Routing
                 'controller' => 'SimulationController',
                 'action' => 'run'
             ],
-
+            // ===== UŻYTKOWNICY =====
+            'dashboard/admin' => [
+                'controller' => 'DashboardController',
+                'action' => 'index'
+            ],
+            'dashboard/admin/users' => [
+                'controller' => 'DashboardController',
+                'action' => 'index'
+            ],
+            'dashboard/admin/delete-user' => [
+                'controller' => 'DashboardController',
+                'action' => 'deleteUser'
+            ],
         ];
     }
 

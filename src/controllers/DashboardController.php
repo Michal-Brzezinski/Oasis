@@ -20,11 +20,58 @@ class DashboardController extends AppController
         $userId = $this->getCurrentUserId();
         $regions = $this->regionRepository->getRegionsByOwner($userId);
 
-        $this->render('dashboard/index', [
-            'regions' => $regions,
-            'pageTitle' => 'Dashboard'
+        if ($_SESSION['user_role'] === 'ADMIN') {
+            $this->render('dashboard/admin/index', [
+                'regions' => $regions,
+                'pageTitle' => 'Dashboard Admina'
+            ]);
+        } else {
+            $this->render('dashboard/index', [
+                'regions' => $regions,
+                'pageTitle' => 'Dashboard'
+            ]);
+        }
+    }
+
+
+    public function admin(): void
+    {
+        $this->requireLogin();
+
+        if ($_SESSION['user_role'] !== 'ADMIN') {
+            http_response_code(403);
+            $this->render('403', ['message' => 'Brak dostępu']);
+        }
+
+        $users = (new UserRepository())->getUsers();
+
+        $this->render('dashboard/admin', [
+            'users' => $users,
+            'pageTitle' => 'Zarządzanie użytkownikami'
         ]);
     }
+
+    public function deleteUser(): void
+    {
+        $this->requireLogin();
+
+        if ($_SESSION['user_role'] !== 'ADMIN') {
+            http_response_code(403);
+            $this->render('403', ['message' => 'Brak dostępu']);
+        }
+
+        $id = (int)($_GET['id'] ?? 0);
+
+        if ($id > 0) {
+            (new UserRepository())->deleteUser($id);
+            $this->addFlash('success', 'Użytkownik został usunięty.');
+        }
+
+        header("Location: /dashboard/admin");
+        exit();
+    }
+
+
 
     public function markNotificationsRead(): void
     {
