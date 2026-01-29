@@ -21,7 +21,7 @@ class DashboardController extends AppController
         $regions = $this->regionRepository->getRegionsByOwner($userId);
 
         if ($_SESSION['user_role'] === 'ADMIN') {
-            $this->render('dashboard/admin/index', [
+            $this->render('dashboard/index_admin', [
                 'regions' => $regions,
                 'pageTitle' => 'Dashboard Admina'
             ]);
@@ -32,46 +32,6 @@ class DashboardController extends AppController
             ]);
         }
     }
-
-
-    public function admin(): void
-    {
-        $this->requireLogin();
-
-        if ($_SESSION['user_role'] !== 'ADMIN') {
-            http_response_code(403);
-            $this->render('403', ['message' => 'Brak dostępu']);
-        }
-
-        $users = (new UserRepository())->getUsers();
-
-        $this->render('dashboard/admin', [
-            'users' => $users,
-            'pageTitle' => 'Zarządzanie użytkownikami'
-        ]);
-    }
-
-    public function deleteUser(): void
-    {
-        $this->requireLogin();
-
-        if ($_SESSION['user_role'] !== 'ADMIN') {
-            http_response_code(403);
-            $this->render('403', ['message' => 'Brak dostępu']);
-        }
-
-        $id = (int)($_GET['id'] ?? 0);
-
-        if ($id > 0) {
-            (new UserRepository())->deleteUser($id);
-            $this->addFlash('success', 'Użytkownik został usunięty.');
-        }
-
-        header("Location: /dashboard/admin");
-        exit();
-    }
-
-
 
     public function markNotificationsRead(): void
     {

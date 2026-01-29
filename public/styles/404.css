@@ -8,7 +8,7 @@
 /* Ogólne ustawienia */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    background-color: #98fbc1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,4 +65,20 @@ body {
 
 .back-home:hover {
     background-color: #45a049;
+}
+
+/* Stylowanie przycisku powrotu na stronę główną */
+.logout {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00008e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+    background-color: #00006b;
 }

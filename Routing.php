@@ -9,6 +9,7 @@ require_once 'src/controllers/SensorsController.php';
 require_once 'src/controllers/SettingsController.php';
 require_once 'src/controllers/RegionsController.php';
 require_once 'src/controllers/SimulationController.php';
+require_once 'src/controllers/UsersController.php';
 
 
 class Routing
@@ -36,7 +37,6 @@ class Routing
                 'controller' => 'SecurityController',
                 'action' => 'privacy'
             ],
-
 
             // ===== DASHBOARD - GŁÓWNY =====
             'dashboard' => [
@@ -213,12 +213,16 @@ class Routing
                 'action' => 'index'
             ],
             'dashboard/admin/users' => [
-                'controller' => 'DashboardController',
+                'controller' => 'UsersController',
                 'action' => 'index'
             ],
-            'dashboard/admin/delete-user' => [
-                'controller' => 'DashboardController',
+            'dashboard/admin/users/delete-user' => [
+                'controller' => 'UsersController',
                 'action' => 'deleteUser'
+            ],
+            'dashboard/admin/users/edit-user' => [
+                'controller' => 'UsersController',
+                'action' => 'editUser'
             ],
         ];
     }
