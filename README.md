@@ -6,6 +6,8 @@
 
 #### Oasis® to responsywna aplikacja webowa wspierająca hodowców roślin w monitorowaniu i regulowaniu warunków uprawy. Umożliwia podgląd parametrów środowiskowych (wilgotność, temperatura, pH gleby, nasłonecznienie), kontrolę podlewania ręcznego i automatycznego, zarządzanie czujnikami i kamerami oraz otrzymywanie powiadomień o potrzebie nawadniania. Dzięki logowaniu i szyfrowaniu danych zapewnia bezpieczeństwo użytkowników i działa zarówno na komputerach, jak i urządzeniach mobilnych.
 
+***Zachęcam do zapoznania się z pełną dokumentacją: [Dokumentacja Oasis](documentation/DocumentationFile.pdf)***
+
 ## SPIS TREŚCI
 - [SPIS TREŚCI](#spis-treści)
 - [OPIS](#opis)

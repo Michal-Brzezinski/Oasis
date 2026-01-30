@@ -97,12 +97,12 @@ class SensorRepository extends Repository
     }
     public function addReading(int $sensorId, float $value): void
     {
-        $stmt = $this->database->prepare(' INSERT INTO sensor_readings (sensor_id, value) VALUES (:sensor_id, :value) ');
+        $stmt = $this->database->prepare(' INSERT INTO latest_sensor_readings (sensor_id, value) VALUES (:sensor_id, :value) ');
         $stmt->execute([':sensor_id' => $sensorId, ':value' => $value]);
     }
     public function getLastReading(int $sensorId): ?SensorReading
     {
-        $stmt = $this->database->prepare(' SELECT * FROM sensor_readings WHERE sensor_id = :sensor_id ORDER BY created_at DESC LIMIT 1 ');
+        $stmt = $this->database->prepare(' SELECT * FROM latest_sensor_readings WHERE sensor_id = :sensor_id ORDER BY created_at DESC LIMIT 1 ');
         $stmt->bindValue(':sensor_id', $sensorId, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ class SensorRepository extends Repository
     {
         $stmt = $this->database->prepare('
         SELECT value, created_at
-        FROM sensor_readings
+        FROM latest_sensor_readings
         WHERE sensor_id = :id
         ORDER BY created_at DESC
         LIMIT :limit
@@ -132,7 +132,7 @@ class SensorRepository extends Repository
     {
         $stmt = $this->database->prepare('
         SELECT sensor_id, value, created_at
-        FROM sensor_readings
+        FROM latest_sensor_readings
         ORDER BY created_at DESC
         LIMIT :limit
     ');
